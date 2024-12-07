@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/BA-Portfolio/static/css/main.5a497024.css",
+    "main.js": "/BA-Portfolio/static/js/main.656c0bc6.js",
+    "static/js/453.1407b060.chunk.js": "/BA-Portfolio/static/js/453.1407b060.chunk.js",
+    "static/media/kasper.png": "/BA-Portfolio/static/media/kasper.0cf645f96b724203facd.png",
+    "static/media/tawasol.png": "/BA-Portfolio/static/media/tawasol.e5e6cb7ba0f624a42b3a.png",
+    "static/media/special.png": "/BA-Portfolio/static/media/special.3de2df435c4ef8a7b56c.png",
+    "static/media/profile.jpg": "/BA-Portfolio/static/media/profile.305dfc5002c4131410f0.jpg",
+    "index.html": "/BA-Portfolio/index.html",
+    "main.5a497024.css.map": "/BA-Portfolio/static/css/main.5a497024.css.map",
+    "main.656c0bc6.js.map": "/BA-Portfolio/static/js/main.656c0bc6.js.map",
+    "453.1407b060.chunk.js.map": "/BA-Portfolio/static/js/453.1407b060.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5a497024.css",
+    "static/js/main.656c0bc6.js"
+  ]
+}
