@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useInView } from "react-intersection-observer";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPhone,
@@ -18,7 +17,7 @@ library.add(faPhone, faUser, faLocationDot, faEnvelope);
 
 function Contact() {
   const { ref: contactRef, inView: isVisible } = useInView({
-    threshold: 0.5,
+    threshold: 0.1,
     triggerOnce: true,
   });
 
@@ -40,7 +39,6 @@ function Contact() {
       e.preventDefault();
       if (!email.value) {
         toast.error("Input Required Filed");
-
         setTimeout(() => {
           email.focus();
           email.classList.add("!border-b-red-500");
@@ -48,7 +46,7 @@ function Contact() {
 
         return false;
       }
-
+      toast.success("Message Will Sent");
       const mailtoUrl = `mailto:bilalQat@hotmail.com?subject=${encodeURIComponent(
         form.subject.value || "no Subject"
       )}&body=${encodeURIComponent(
@@ -79,12 +77,11 @@ function Contact() {
 
   return (
     <div
-      className={`contact relative pt-16 pb-16 ${
+      className={`contact relative overflow-hidden pt-16 pb-16 ${
         isDarkMode && "!bg-gray-900 dark"
-      }
-        ${
-          isVisible ? "fill-animation" : "hidden-animation"
-        } transition-all  duration-300`}
+      } ${
+        isVisible ? "fill-animation" : "hidden-animation"
+      } transition-all  duration-300`}
       id="contact"
       ref={contactRef}
     >
@@ -200,7 +197,6 @@ function Contact() {
             </h3>
             <Social />
           </div>
-          <ToastContainer className={isDarkMode && "dark"} />
           <form
             className={`p-6 relative ${
               isDarkMode ? "bg-blue-950 text-white" : "bg-white text-black"

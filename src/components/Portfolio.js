@@ -48,7 +48,7 @@ function Portfolio({ getRepo, getSpecificRepo, repos, specificRepo }) {
         >
           My Portfolio
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5 portfolios-content">
+        <div className="grid grid-cols-1 md:grid-cols-2 md:text-start lg:grid-cols-3 gap-5 text-center portfolios-content">
           {repos.map((repo) => {
             if (
               repo.id.toString() === "598411642" ||
@@ -98,6 +98,7 @@ const Repo = ({ repo: { name, description, html_url }, isDarkMode }) => {
             <img
               src={getRepoImage(name) || "default-image-path.png"}
               alt="repo_image"
+              className="mx-auto transition duration-300 cursor-pointer"
             />
           }
           position="top center"

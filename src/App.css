@@ -517,7 +517,7 @@ header .container {
   animation-play-state: paused;
   opacity: 1 !important;
   box-shadow: 0 0 0 500px rgba(244, 63, 93);
-} 
+}
 @media (min-width: 1280px) {
   .about-me div:has(> p):hover::before {
     box-shadow: 0 0 0 650px rgba(244, 63, 93);
@@ -546,19 +546,6 @@ header .container {
 /* Start Portfolio */
 .portfolio {
   background-color: var(--main-bg-color);
-}
-.portfolio div:has(img) {
-  max-width: 100%;
-}
-.portfolio img {
-  margin-left: auto;
-  margin-right: auto;
-  transition: var(--main-transition);
-  -webkit-transition: var(--main-transition);
-  -moz-transition: var(--main-transition);
-  -ms-transition: var(--main-transition);
-  -o-transition: var(--main-transition);
-  cursor: pointer;
 }
 .portfolio:hover img {
   transform: scale(1.1);
