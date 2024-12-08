@@ -114,41 +114,6 @@ const Repo = ({ repo: { name, description, html_url }, isDarkMode }) => {
             View Project <FontAwesomeIcon icon="fa-solid fa-location-arrow" />
           </a>
         </Popup>
-        {/* <Popup
-          trigger={
-            <img
-              src={
-                name.toLowerCase().includes("tawasol")
-                  ? tawasolImg
-                  : name.toLowerCase().includes("special")
-                  ? specialImg
-                  : name.toLowerCase().includes("doob")
-                  ? DoobImg
-                  : name.toLowerCase().includes("kasper")
-                  ? kasperImg
-                  : name.toLowerCase().includes("huddle-page-with-curve")
-                  ? huddleImg
-                  : name.toLowerCase().includes("dashboard")
-                  ? dashboardImg
-                  : console.log("No Image")
-              }
-              alt="repo_image"
-            />
-          }
-          position="top center"
-          className={`popup-content popup-arrow ${
-            isDarkMode ? "dark-mode" : "light-mode"
-          }`}
-        >
-          <a
-            className="flex justify-between items-center"
-            href={html_url}
-            target="_blank"
-            rel="noreferrer"
-          >
-            View Project <FontAwesomeIcon icon="fa-solid fa-location-arrow" />
-          </a>
-        </Popup> */}
       </div>
       <div
         className={`hover:text-gray-700 mt-5 transition ${
