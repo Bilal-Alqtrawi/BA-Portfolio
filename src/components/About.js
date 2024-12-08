@@ -114,11 +114,11 @@ function About() {
             <div className="mt-8 flex items-center gap-8 resume-file justify-center md:justify-normal ">
               <h4 className={`text-2xl`}>Resume.pdf</h4>
               <a
-                href="/Resume.pdf"
+                href="https://bilal-alqtrawi.github.io/BA-Portfolio/Resume.pdf"
                 className={`px-5 py-2 flex justify-between items-center gap-6 bg-rose-500 hover:bg-rose-700 text-white rounded-md transition font-medium`}
                 download="MyResume.pdf"
               >
-                <span className="">Download</span>
+                <span>Download</span>
                 <FontAwesomeIcon icon={faDownload} />
               </a>
             </div>
