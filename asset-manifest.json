@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/BA-Portfolio/static/css/main.89f01552.css",
-    "main.js": "/BA-Portfolio/static/js/main.97e9f36a.js",
+    "main.css": "/BA-Portfolio/static/css/main.2815f817.css",
+    "main.js": "/BA-Portfolio/static/js/main.1a6f71de.js",
     "static/js/453.1407b060.chunk.js": "/BA-Portfolio/static/js/453.1407b060.chunk.js",
     "static/media/Doob.png": "/BA-Portfolio/static/media/Doob.bfecbcebd8bce1d2d1b6.png",
     "static/media/kasper.png": "/BA-Portfolio/static/media/kasper.0cf645f96b724203facd.png",
     "static/media/tawasol.png": "/BA-Portfolio/static/media/tawasol.e5e6cb7ba0f624a42b3a.png",
     "static/media/special.png": "/BA-Portfolio/static/media/special.3de2df435c4ef8a7b56c.png",
-    "static/media/huddle.png": "/BA-Portfolio/static/media/huddle.98166c2c0328f582a03d.png",
+    "static/media/huddle.png": "/BA-Portfolio/static/media/huddle.650e1cf6bce59f06f604.png",
     "static/media/dashboard.png": "/BA-Portfolio/static/media/dashboard.4d603c6f8a00c1d1a38e.png",
     "static/media/profile.jpg": "/BA-Portfolio/static/media/profile.305dfc5002c4131410f0.jpg",
     "index.html": "/BA-Portfolio/index.html",
-    "main.89f01552.css.map": "/BA-Portfolio/static/css/main.89f01552.css.map",
-    "main.97e9f36a.js.map": "/BA-Portfolio/static/js/main.97e9f36a.js.map",
+    "main.2815f817.css.map": "/BA-Portfolio/static/css/main.2815f817.css.map",
+    "main.1a6f71de.js.map": "/BA-Portfolio/static/js/main.1a6f71de.js.map",
     "453.1407b060.chunk.js.map": "/BA-Portfolio/static/js/453.1407b060.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.89f01552.css",
-    "static/js/main.97e9f36a.js"
+    "static/css/main.2815f817.css",
+    "static/js/main.1a6f71de.js"
   ]
 }
