@@ -8,7 +8,7 @@ function About() {
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
 
   const { ref: aboutRef, inView: isVisible } = useInView({
-    threshold: 0.1,
+    threshold: 0.3,
     triggerOnce: true,
   });
 
