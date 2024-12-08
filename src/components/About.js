@@ -120,11 +120,11 @@ function About() {
               <h4 className={`text-2xl`}>Resume.pdf</h4>
               <a
                 href="/Resume.pdf"
-                className={`px-5 py-2 flex justify-between items-center gap-6`}
+                className={`px-5 py-2 flex justify-between items-center gap-6 bg-rose-500 hover:bg-rose-700 text-white rounded-md transition font-medium`}
                 download="MyResume.pdf"
               >
                 <span className="">Download</span>
-                <FontAwesomeIcon className="text-neutral-300" icon={faDownload} />
+                <FontAwesomeIcon icon={faDownload} />
               </a>
             </div>
           </div>
