@@ -4,14 +4,12 @@ import { useInView } from "react-intersection-observer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
-
 function About() {
-
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
 
-  const {ref: aboutRef, inView: isVisible} = useInView({
-    threshold: 0.5,
-    triggerOnce: true
+  const { ref: aboutRef, inView: isVisible } = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
   });
 
   useEffect(() => {
@@ -35,12 +33,9 @@ function About() {
     <div
       className={`pt-16 pb-16 about-me ${
         isDarkMode ? "dark bg-gray-900 text-white" : "bg-white"
-      } ${
-        isVisible ? "fill-animation" : "hidden-animation"
-      }`}
+      } ${isVisible ? "fill-animation" : "hidden-animation"}`}
       id="about"
       ref={aboutRef}
-      
     >
       <div className="container mx-auto px-4">
         <h2 className="mb-12 text-4xl text-center font-bold">About Me</h2>

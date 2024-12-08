@@ -299,7 +299,7 @@ header .container {
       background-color: var(--main-bg-color);
     }
     .landing .container {
-      padding-top: 3rem;
+      padding-top: 4rem;
       padding-bottom: 3rem;
     }
     .landing.dark {
