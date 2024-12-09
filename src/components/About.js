@@ -100,10 +100,9 @@ function About() {
               <p>
                 Today, I am a proficient{" "}
                 <span className="font-semibold">React developer</span> with
-                experience in
-                <span className="font-semibold">Redux</span> for state
-                management. One of my most significant professional and training
-                projects was building a fully{" "}
+                experience in <span className="font-semibold">Redux</span> for
+                state management. One of my most significant professional and
+                training projects was building a fully{" "}
                 <span className="font-semibold">
                   responsive social networking site
                 </span>{" "}
