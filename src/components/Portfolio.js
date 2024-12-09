@@ -74,7 +74,7 @@ function Portfolio({ getRepo, getSpecificRepo, repos, specificRepo }) {
     </div>
   );
 }
-const Repo = ({ repo: { name, description, html_url }, isDarkMode }) => {
+const Repo = ({ repo: { name, description }, isDarkMode }) => {
   const getRepoImage = (repoName) => {
     const lowerCaseName = repoName.toLowerCase();
     return (
@@ -84,6 +84,11 @@ const Repo = ({ repo: { name, description, html_url }, isDarkMode }) => {
       ]
     );
   };
+
+  const getRepoLink = (repoName) => {
+    return `https://bilal-alqtrawi.github.io/${repoName}/`;
+  };
+
   return (
     <div
       className={`p-5 duration-300 ease-linear rounded-2xl shadow-xl portfolio ${
@@ -108,7 +113,7 @@ const Repo = ({ repo: { name, description, html_url }, isDarkMode }) => {
         >
           <a
             className="flex justify-between items-center"
-            href={html_url}
+            href={getRepoLink(name)}
             target="_blank"
             rel="noreferrer"
           >
