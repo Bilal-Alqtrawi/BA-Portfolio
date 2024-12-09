@@ -4,10 +4,14 @@ import Social from "./Social";
 function Footer() {
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
   return (
-    <div className={`footer overflow-hidden ${isDarkMode ? "bg-slate-950" : "bg-gray-800"}`}>
+    <div
+      className={`footer overflow-hidden ${
+        isDarkMode ? "bg-slate-950" : "bg-gray-800"
+      }`}
+    >
       <div className="footer-content p-7 mx-auto text-center border-none">
         <h2 className="text-gray-100 text-3xl w-fit mx-auto font-serif font-bold hover:text-rose-500 duration-300 -tracking-tighter">
-          <a href="/" className="logo" aria-label="logo">
+          <a href="./" className="logo" aria-label="logo">
             Bilal
           </a>
         </h2>

@@ -1,7 +1,12 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faListCheck, faSliders,faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHouse,
+  faListCheck,
+  faSliders,
+  faWandMagicSparkles,
+} from "@fortawesome/free-solid-svg-icons";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 
 function Header({ component: Component }) {
@@ -73,7 +78,7 @@ function Header({ component: Component }) {
               : "text-black hover:text-white hover:bg-black first-letter:text-rose-500"
           }`}
         >
-          <a href="/" aria-label="bilal Name Of Logo">
+          <a href="./" aria-label="bilal Name Of Logo">
             Bilal
           </a>
         </h2>
