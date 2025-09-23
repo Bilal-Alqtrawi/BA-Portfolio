@@ -6,6 +6,7 @@ import {
   faPhp,
   faJava,
   faPython,
+  faReact,
 } from "@fortawesome/free-brands-svg-icons";
 
 library.add(faHtml5, faCss3, faJs, faPhp, faJava, faPython);
@@ -33,31 +34,37 @@ const SKILLS = [
   {
     id: randomSerialNumber(),
     name: "CSS",
-    progress: "97%",
+    progress: "98%",
     icon: faCss3,
   },
   {
     id: randomSerialNumber(),
     name: "JavaScript",
-    progress: "98%",
+    progress: "99%",
     icon: faJs,
   },
   {
     id: randomSerialNumber(),
+    name: "React.js",
+    progress: "99%",
+    icon: faReact,
+  },
+  {
+    id: randomSerialNumber(),
     name: "PHP",
-    progress: "70%",
+    progress: "95%",
     icon: faPhp,
   },
   {
     id: randomSerialNumber(),
     name: "Java",
-    progress: "85%",
+    progress: "95%",
     icon: faJava,
   },
   {
     id: randomSerialNumber(),
     name: "Python",
-    progress: "80%",
+    progress: "88%",
     icon: faPython,
   },
 ];
