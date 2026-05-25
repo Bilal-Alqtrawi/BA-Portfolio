@@ -1,32 +1,73 @@
-import { Provider } from "react-redux";
+import { useEffect } from "react";
+import { Provider, useSelector } from "react-redux";
 import store from "./redux/store";
 import "./App.css";
+import { I18nProvider, useI18n } from "./context/I18nContext";
 import Header from "./components/Header";
-import Landing from "./components/Landing";
+import Hero from "./components/Hero";
 import About from "./components/About";
-import Features from "./components/Features";
-import Portfolio from "./components/Portfolio";
-import Contact from "./components/Contact";
 import Skills from "./components/Skills";
-import { Fragment } from "react";
-import DarkModeToggle from "./components/DarkModeTogge";
+import Expertise from "./components/Expertise";
+import Projects from "./components/Projects";
+import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import PageLoader from "./components/PageLoader";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+function ThemeRoot({ children }) {
+  const isDarkMode = useSelector((s) => s.theme.isDarkMode);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDarkMode) root.classList.add("dark");
+    else root.classList.remove("dark");
+  }, [isDarkMode]);
+
+  return children;
+}
+
+function MetaTitle() {
+  const { t } = useI18n();
+  useEffect(() => {
+    document.title = t("meta.title");
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", t("meta.description"));
+  }, [t]);
+  return null;
+}
+
+function AppShell() {
+  return (
+    <ThemeRoot>
+      <MetaTitle />
+      <ToastContainer
+        position="top-center"
+        theme="colored"
+        autoClose={2800}
+        hideProgressBar
+      />
+      <PageLoader />
+      <Header />
+      <main>
+        <Hero />
+        <About />
+        <Skills />
+        <Expertise />
+        <Projects />
+        <Contact />
+      </main>
+      <Footer />
+    </ThemeRoot>
+  );
+}
+
 function App() {
   return (
     <Provider store={store}>
-      <Fragment>
-        <ToastContainer />
-        <Header component={DarkModeToggle} />
-        <Landing />
-        <About />
-        <Skills />
-        <Features />
-        <Portfolio />
-        <Contact />
-        <Footer />
-      </Fragment>
+      <I18nProvider>
+        <AppShell />
+      </I18nProvider>
     </Provider>
   );
 }

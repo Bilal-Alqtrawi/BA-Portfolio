@@ -1,66 +1,74 @@
 import { useSelector } from "react-redux";
+import { useI18n } from "../context/I18nContext";
 import Social from "./Social";
 
-function Footer() {
-  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
+const FOOTER_NAV = [
+  { hash: "#home", key: "nav.home" },
+  { hash: "#about", key: "nav.about" },
+  { hash: "#skills", key: "nav.skills" },
+  { hash: "#expertise", key: "nav.expertise" },
+  { hash: "#projects", key: "nav.projects" },
+  { hash: "#contact", key: "nav.contact" },
+];
+
+export default function Footer() {
+  const { t } = useI18n();
+  const isDarkMode = useSelector((s) => s.theme.isDarkMode);
+
   return (
-    <div
-      className={`footer overflow-hidden ${
-        isDarkMode ? "bg-slate-950" : "bg-gray-800"
+    <footer
+      className={`border-t py-14 ${
+        isDarkMode
+          ? "border-zinc-800 bg-zinc-950"
+          : "border-ink-200 bg-zinc-100 text-ink-900"
       }`}
     >
-      <div className="footer-content p-7 mx-auto text-center border-none">
-        <h2 className="text-gray-100 text-3xl w-fit mx-auto font-serif font-bold hover:text-rose-500 duration-300 -tracking-tighter">
-          <a href="./" className="logo" aria-label="logo">
-            Bilal
-          </a>
-        </h2>
-        <nav className="mt-5 mb-6 flex flex-wrap justify-center items-start text-neutral-200 gap-5">
-          <a
-            href="#about"
-            className="-tracking-tighter transition-all hover:text-rose-500 hover:pb-5 inline-flex h-8 items-center"
-          >
-            About
-          </a>
-          <a
-            href="#skills"
-            className="-tracking-tighter transition-all hover:text-rose-500 hover:pb-5 inline-flex h-8 items-center"
-          >
-            Skills
-          </a>
-          <a
-            href="#features"
-            className="-tracking-tighter transition-all hover:text-rose-500 hover:pb-5 inline-flex h-8 items-center"
-          >
-            Features
-          </a>
-          <a
-            href="#portfolios"
-            className="-tracking-tighter transition-all hover:text-rose-500 hover:pb-5 inline-flex h-8 items-center"
-          >
-            Portfolios
-          </a>
-          <a
-            href="#contact"
-            className="-tracking-tighter transition-all hover:text-rose-500 hover:pb-5 inline-flex h-8 items-center"
-          >
-            Contact
-          </a>
+      <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-4 text-center sm:px-6 lg:px-8">
+        <a
+          href="#home"
+          className={`font-display text-2xl font-bold transition hover:text-brand-600 ${
+            isDarkMode ? "text-white hover:text-brand-400" : "text-ink-950"
+          }`}
+        >
+          {t("common.logo")}
+        </a>
+        <nav
+          className={`flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm ${
+            isDarkMode ? "text-zinc-300" : "text-ink-600"
+          }`}
+        >
+          {FOOTER_NAV.map((item) => (
+            <a
+              key={item.hash}
+              href={item.hash}
+              className={`transition ${
+                isDarkMode ? "hover:text-brand-400" : "hover:text-brand-600"
+              }`}
+            >
+              {t(item.key)}
+            </a>
+          ))}
         </nav>
-        <div className="social-media">
-          <h3 className={`mb-7 text-2xl text-gray-100 w-fit mx-auto relative`}>
-            Social Media
-          </h3>
-          <Social />
+        <div>
+          <p
+            className={`text-xs uppercase tracking-widest ${
+              isDarkMode ? "text-zinc-500" : "text-ink-500"
+            }`}
+          >
+            {t("footer.connect")}
+          </p>
+          <div className="mt-4 flex justify-center">
+            <Social variant={isDarkMode ? "footer" : "default"} />
+          </div>
         </div>
-
-        <p className="mt-9 leading-5 text-gray-200 transition-colors duration-300 hover:text-rose-50 hover:animate-none text-xs md:text-base animate-pulse">
-          &copy; Best regards and was Created with love by{" "}
-          <b className="block sm:inline-block">Bilal Al-Qatrawi</b>
+        <p
+          className={`max-w-md text-sm leading-relaxed ${
+            isDarkMode ? "text-zinc-400" : "text-ink-600"
+          }`}
+        >
+          © {new Date().getFullYear()} {t("footer.builtBy")}. {t("footer.rights")}
         </p>
       </div>
-    </div>
+    </footer>
   );
 }
-
-export default Footer;

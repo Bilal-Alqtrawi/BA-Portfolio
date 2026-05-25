@@ -1,8 +1,18 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen, waitFor } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+beforeEach(() => {
+  localStorage.setItem("portfolio_locale", "en");
 });
+
+test("renders portfolio shell", async () => {
+  render(<App />);
+  await waitFor(
+    () => {
+      expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+        /Bilal Alqatrawi/i
+      );
+    },
+    { timeout: 8000 }
+  );
+}, 10000);

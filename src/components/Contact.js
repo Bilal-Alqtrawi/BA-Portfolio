@@ -1,6 +1,5 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useInView } from "react-intersection-observer";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,292 +8,244 @@ import {
   faLocationDot,
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
-
 import { library } from "@fortawesome/fontawesome-svg-core";
 import Social from "./Social";
+import { WHATSAPP_URL } from "../data/contact";
+import { useI18n } from "../context/I18nContext";
+import Reveal from "./ui/Reveal";
+import SectionHeading from "./ui/SectionHeading";
 
 library.add(faPhone, faUser, faLocationDot, faEnvelope);
 
-function Contact() {
-  const { ref: contactRef, inView: isVisible } = useInView({
-    threshold: 0.1,
-    triggerOnce: true,
-  });
+const initialForm = {
+  name: "",
+  phone: "",
+  email: "",
+  subject: "",
+  message: "",
+};
 
-  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
+export default function Contact() {
+  const { t } = useI18n();
+  const isDarkMode = useSelector((s) => s.theme.isDarkMode);
+  const [form, setForm] = useState(initialForm);
+  const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    const inputs = document.querySelectorAll(".input-field");
-    const form = document.forms[0];
-    const email = form.email;
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setForm((f) => ({ ...f, [name]: value }));
+  };
 
-    const onInput = (e) => {
-      e.target.classList.add("!border-b-green-700");
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (!form.email.trim()) {
+      toast.error(t("toast.needEmail"));
+      return;
+    }
+    setSubmitting(true);
+    const mailtoUrl = `mailto:${t("contact.emailValue")}?subject=${encodeURIComponent(
+      form.subject || "Portfolio",
+    )}&body=${encodeURIComponent(
+      `Name: ${form.name}\nPhone: ${form.phone}\n\n${form.message}`,
+    )}`;
+    toast.success(t("toast.sent"));
+    setTimeout(() => {
+      window.location.href = mailtoUrl;
+      setForm(initialForm);
+      setSubmitting(false);
+    }, 600);
+  };
 
-      if (e.target.value === "") {
-        e.target.classList.remove("!border-b-green-700");
-      }
-    };
-    const onSubmit = (e) => {
-      e.preventDefault();
-      if (!email.value) {
-        toast.error("Input Required Filed");
-        setTimeout(() => {
-          email.focus();
-          email.classList.add("!border-b-red-500");
-        }, 2000);
-
-        return false;
-      }
-      toast.success("Message Will Sent");
-      const mailtoUrl = `mailto:bilalQat@hotmail.com?subject=${encodeURIComponent(
-        form.subject.value || "no Subject"
-      )}&body=${encodeURIComponent(
-        `Name: ${form.name.value}\nPhone: ${form.phoneNumber.value}\n\nMessage: \n${form.message.value}`
-      )}`;
-
-      form.reset();
-
-      inputs.forEach((input) => {
-        if (input === email) {
-          email.classList.remove("!border-b-red-500");
-        }
-        input.classList.remove("!border-b-green-700");
-      });
-      setTimeout(() => {
-        window.location.href = mailtoUrl;
-      }, 1000);
-    };
-
-    form.addEventListener("input", onInput);
-    form.addEventListener("submit", onSubmit);
-
-    return function cleanup() {
-      form.removeEventListener("input", onInput);
-      form.removeEventListener("submit", onSubmit);
-    };
-  }, []);
+  const field =
+    "w-full rounded-xl border border-ink-200/90 bg-white px-4 py-3 text-ink-900 outline-none transition placeholder:text-ink-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-brand-400";
 
   return (
-    <div
-      className={`contact relative overflow-hidden pt-16 pb-16 ${
-        isDarkMode && "!bg-gray-900 dark"
-      } ${
-        isVisible ? "fill-animation" : "hidden-animation"
-      } transition-all  duration-300`}
+    <section
       id="contact"
-      ref={contactRef}
+      className={`scroll-mt-24 py-20 md:py-28 ${
+        isDarkMode ? "bg-zinc-900" : "bg-white"
+      }`}
     >
-      <div className="container mx-auto px-4">
-        <h2
-          className={`mb-12 text-4xl text-center font-bold ${
-            isDarkMode ? "text-white" : "text-blue-950"
-          }`}
-        >
-          Contact With Me
-        </h2>
-        <div className="flex justify-between">
-          <div
-            className={`p-6 info ${isDarkMode ? "bg-blue-950" : "bg-white"}`}
-          >
-            <h3
-              className={`text-center font-bold text-3xl  mb-5 ${
-                isDarkMode ? "text-white" : "text-blue-950"
-              }`}
-            >
-              My Info
-            </h3>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <SectionHeading
+            title={t("contact.title")}
+            subtitle={t("contact.subtitle")}
+          />
+        </Reveal>
+
+        <div className="grid gap-8 lg:grid-cols-2">
+          <Reveal>
             <div
-              className={`text-xl flex justify-between mb-5 ${
-                isDarkMode ? "text-white" : "text-gray-900"
+              className={`h-full rounded-2xl border p-8 shadow-sm ${
+                isDarkMode
+                  ? "border-zinc-800 bg-zinc-950/60"
+                  : "border-ink-100 bg-ink-50/60"
               }`}
             >
-              <FontAwesomeIcon
-                className={`bg-black rounded-full w-6 h-6 p-3 cursor-pointer transition-all duration-300  ${
-                  isDarkMode
-                    ? "text-white bg-gray-900 hover:text-gray-600 hover:bg-white"
-                    : "text-blue-950 bg-gray-200 hover:text-gray-300 hover:bg-black"
-                }`}
-                icon={faUser}
-              />
-              <span
-                className={`inline-block ml-2 font-normal italic ${
-                  isDarkMode ? "text-neutral-200 " : "text-blue-950"
-                }`}
-              >
-                Bilal Alqtrawi
-              </span>
+              <h3 className="font-display text-2xl text-ink-950 dark:text-white">
+                {t("contact.infoTitle")}
+              </h3>
+              <ul className="mt-8 space-y-5 text-ink-800 dark:text-zinc-200">
+                <li className="flex items-start gap-4">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink-900 text-white dark:bg-zinc-800">
+                    <FontAwesomeIcon icon={faUser} />
+                  </span>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                      {t("contact.name")}
+                    </p>
+                    <p className="mt-1">{t("contact.fullName")}</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink-900 text-white dark:bg-zinc-800">
+                    <FontAwesomeIcon icon={faPhone} />
+                  </span>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                      {t("contact.phone")}
+                    </p>
+                    <a
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-1 inline-block font-medium text-brand-600 hover:underline dark:text-brand-400"
+                      dir="ltr"
+                      aria-label={t("contact.whatsapp")}
+                    >
+                      {t("contact.phoneValue")}
+                    </a>
+                  </div>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink-900 text-white dark:bg-zinc-800">
+                    <FontAwesomeIcon icon={faEnvelope} />
+                  </span>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                      {t("contact.email")}
+                    </p>
+                    <a
+                      className="mt-1 inline-block text-brand-600 hover:underline dark:text-brand-400"
+                      href={`mailto:${t("contact.emailValue")}`}
+                    >
+                      {t("contact.emailValue")}
+                    </a>
+                  </div>
+                </li>
+                <li className="flex items-center gap-4">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink-900 text-white dark:bg-zinc-800">
+                    <FontAwesomeIcon icon={faLocationDot} />
+                  </span>
+                  <div>
+                    <p className="text-sm leading-relaxed text-ink-800 dark:text-zinc-200">
+                      {t("contact.location")}
+                    </p>
+                  </div>
+                </li>
+              </ul>
+
+              <h4 className="mt-10 font-display text-lg text-ink-950 dark:text-white">
+                {t("contact.social")}
+              </h4>
+              <div className="mt-4 justify-start">
+                <Social />
+              </div>
             </div>
-            <div
-              className={`text-xl flex justify-between mb-5 ${
-                isDarkMode ? "text-white" : "text-gray-900"
+          </Reveal>
+
+          <Reveal delay={0.08}>
+            <form
+              onSubmit={onSubmit}
+              className={`rounded-2xl border p-8 shadow-sm ${
+                isDarkMode
+                  ? "border-zinc-800 bg-zinc-950/60"
+                  : "border-ink-100 bg-white"
               }`}
             >
-              <FontAwesomeIcon
-                className={`bg-black rounded-full w-6 h-6 p-3 cursor-pointer transition-all duration-300  ${
-                  isDarkMode
-                    ? "text-white bg-gray-900 hover:text-gray-600 hover:bg-white"
-                    : "text-blue-950 bg-gray-200 hover:text-gray-300 hover:bg-black"
-                }`}
-                icon={faPhone}
-              />
-              <span
-                className={`inline-block ml-2 font-normal italic ${
-                  isDarkMode ? "text-neutral-200 " : "text-blue-950"
-                }`}
-              >
-                (+972) 59 774 6577
-              </span>
-            </div>
-            <div
-              className={`text-xl flex justify-between mb-5 ${
-                isDarkMode ? "text-white" : "text-gray-900"
-              }`}
-            >
-              <FontAwesomeIcon
-                className={`bg-black rounded-full w-6 h-6 p-3 cursor-pointer transition-all duration-300  ${
-                  isDarkMode
-                    ? "text-white bg-gray-900 hover:text-gray-600 hover:bg-white"
-                    : "text-blue-950 bg-gray-200 hover:text-gray-300 hover:bg-black"
-                }`}
-                icon={faEnvelope}
-              />
-              <span
-                className={`inline-block ml-2 font-normal italic ${
-                  isDarkMode ? "text-neutral-200 " : "text-blue-950"
-                }`}
-              >
-                bilalQat@hotmail.com
-              </span>
-            </div>
-            <div
-              className={`text-xl flex justify-between ${
-                isDarkMode ? "text-white" : "text-gray-900"
-              }`}
-            >
-              <FontAwesomeIcon
-                className={`bg-black rounded-full w-6 h-6 p-3 cursor-pointer transition-all duration-300  ${
-                  isDarkMode
-                    ? "text-white bg-gray-900 hover:text-gray-600 hover:bg-white"
-                    : "text-blue-950 bg-gray-200 hover:text-gray-300 hover:bg-black"
-                }`}
-                icon={faLocationDot}
-              />
-              <span
-                className={`inline-block ml-2 font-normal italic ${
-                  isDarkMode ? "text-neutral-200 " : "text-blue-950"
-                }`}
-              >
-                Palestine, Gaza-strip 123
-              </span>
-            </div>
-            <h3
-              className={`text-center font-bold text-3xl mt-7 mb-6 ${
-                isDarkMode ? "text-white" : "text-blue-950"
-              }`}
-            >
-              Social Media
-            </h3>
-            <Social />
-          </div>
-          <form
-            className={`p-6 relative ${
-              isDarkMode ? "bg-blue-950 text-white" : "bg-white text-black"
-            }`}
-            target="_blank"
-          >
-            <div className="flex justify-between gap-5 flex-col sm:flex-row ">
-              <div className="basis-full sm:basis-2/4">
-                <label>
-                  <span className="block w-full mb-3 uppercase">Your Name</span>
+              <h3 className="font-display text-2xl text-ink-950 dark:text-white">
+                {t("contact.formTitle")}
+              </h3>
+              <div className="mt-8 grid gap-5 sm:grid-cols-2">
+                <label className="block sm:col-span-1">
+                  <span className="mb-2 block text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                    {t("contact.name")}
+                  </span>
                   <input
-                    className={`w-full p-3 input-field ${
-                      isDarkMode
-                        ? "text-white !bg-slate-900 !border-neutral-200 transition hover:!bg-opacity-55"
-                        : "text-black"
-                    }`}
-                    type="text"
-                    placeholder="Enter Your Name"
+                    className={field}
                     name="name"
+                    value={form.name}
+                    onChange={onChange}
+                    placeholder={t("contact.namePh")}
+                    autoComplete="name"
                   />
                 </label>
-              </div>
-              <div className="basis-full sm:basis-2/4">
-                <label>
-                  <span className="block mb-3 uppercase">Phone Number</span>
+                <label className="block sm:col-span-1">
+                  <span className="mb-2 block text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                    {t("contact.phone")}
+                  </span>
                   <input
-                    className={`w-full p-3 input-field ${
-                      isDarkMode
-                        ? "text-white !bg-slate-900 !border-neutral-200 transition hover:!bg-opacity-60"
-                        : "text-black"
-                    }`}
-                    type="text"
-                    placeholder="+(000) 59 700 6000"
-                    name="phoneNumber"
+                    className={field}
+                    name="phone"
+                    value={form.phone}
+                    onChange={onChange}
+                    placeholder={t("contact.phonePh")}
+                    autoComplete="tel"
+                  />
+                </label>
+                <label className="block sm:col-span-2">
+                  <span className="mb-2 block text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                    {t("contact.email")}
+                  </span>
+                  <input
+                    className={field}
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={onChange}
+                    required
+                    placeholder={t("contact.emailPh")}
+                    autoComplete="email"
+                  />
+                </label>
+                <label className="block sm:col-span-2">
+                  <span className="mb-2 block text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                    {t("contact.subject")}
+                  </span>
+                  <input
+                    className={field}
+                    name="subject"
+                    value={form.subject}
+                    onChange={onChange}
+                    placeholder={t("contact.subjectPh")}
+                  />
+                </label>
+                <label className="block sm:col-span-2">
+                  <span className="mb-2 block text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                    {t("contact.message")}
+                  </span>
+                  <textarea
+                    className={`${field} min-h-[140px] resize-y`}
+                    name="message"
+                    value={form.message}
+                    onChange={onChange}
+                    placeholder={t("contact.messagePh")}
+                    rows={5}
                   />
                 </label>
               </div>
-            </div>
-            <div className="mt-5">
-              <label>
-                <span className="block mb-3 uppercase">Your Email</span>
-                <input
-                  className={`w-full p-3 input-field ${
-                    isDarkMode
-                      ? "text-white !bg-slate-900 !border-neutral-200 transition hover:!bg-opacity-60"
-                      : "text-black"
-                  }`}
-                  type="email"
-                  placeholder="Enter Your Email"
-                  name="email"
-                />
-              </label>
-            </div>
-            <div className="mt-5">
-              <label>
-                <span className="block mb-3 uppercase">Subject</span>
-                <input
-                  className={`w-full p-3 input-field ${
-                    isDarkMode
-                      ? "text-white !bg-slate-900 !border-neutral-200 transition hover:!bg-opacity-60"
-                      : "text-black"
-                  }`}
-                  type="text"
-                  placeholder="Title Subject"
-                  name="subject"
-                />
-              </label>
-            </div>
-            <div className="mt-5">
-              <label>
-                <span className="block mb-3 uppercase">Your Message</span>
-                <textarea
-                  className={`w-full p-3 font-mono  input-field ${
-                    isDarkMode
-                      ? "text-white !bg-slate-900 !border-neutral-200 transition hover:!bg-opacity-56"
-                      : "text-black"
-                  }`}
-                  name="message"
-                  placeholder="Enter Your Message"
-                />
-              </label>
-            </div>
-            <div className="mt-5">
-              <input
-                className={`block w-36 mx-auto transition p-3 cursor-pointer ${
-                  isDarkMode
-                    ? "!bg-neutral-50 text-black hover:!bg-neutral-300"
-                    : "text-white"
-                }`}
-                value="Submit"
+              <button
                 type="submit"
-              />
-            </div>
-          </form>
+                disabled={submitting}
+                className="mt-8 w-full rounded-full bg-brand-600 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-500 disabled:cursor-wait disabled:opacity-70 sm:w-auto sm:min-w-[200px] sm:px-10"
+              >
+                {submitting ? t("common.sending") : t("common.submit")}
+              </button>
+            </form>
+          </Reveal>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
-
-export default Contact;
