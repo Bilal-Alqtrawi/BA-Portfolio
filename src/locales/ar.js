@@ -1,6 +1,6 @@
 const ar = {
   meta: {
-    title: "معرض أعمال — بلال القطروي",
+    title: "معرض أعمال — بلال القطراوي",
     description:
       "مطوّر واجهات أمامية متخصص في React.js و Next.js — منصات SaaS ولوحات تحكم وتجارة إلكترونية باستخدام Tailwind و MUI وتكامل API جاهز للإنتاج.",
   },
@@ -27,7 +27,7 @@ const ar = {
   hero: {
     badge: "مطوّر واجهات أمامية مستقل · غزة، فلسطين",
     greeting: "مرحباً، أنا",
-    name: "بلال القطروي",
+    name: "بلال القطراوي",
     rolePrefix: "أبني",
     roles: [
       "منصات SaaS ولوحات تحكم",
@@ -143,7 +143,7 @@ const ar = {
     subtitle: "صف منتجك والجدول الزمني والأهداف.",
     infoTitle: "مباشر",
     formTitle: "رسالة",
-    fullName: "بلال القطروي",
+    fullName: "بلال القطراوي",
     phoneValue: "059 309 4894",
     emailValue: "bbill4552@gmail.com",
     name: "الاسم",
@@ -164,7 +164,7 @@ const ar = {
   },
   footer: {
     rights: "صُنع بعناية.",
-    builtBy: "بلال القطروي",
+    builtBy: "بلال القطراوي",
     connect: "تواصل",
   },
   toast: {

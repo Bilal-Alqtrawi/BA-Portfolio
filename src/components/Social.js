@@ -74,7 +74,7 @@ export default function Social({ variant = "default" }) {
       </li>
       <li>
         <a
-          href="https://www.linkedin.com/in/bilal-alqtrawi-00ba8b18a/"
+          href="https://www.linkedin.com/in/bilalalqatrawi"
           target="_blank"
           rel="noreferrer"
           className="transition hover:text-[#0a66c2]"

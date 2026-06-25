@@ -37,7 +37,7 @@ export const PROJECTS: Project[] = [
     image: publicImage("moaawen.jpeg"),
     demoUrl: "https://moawen.sa",
     dashboardUrl: "http://app.moawen.sa",
-    authNote: "projects.wsl.notes",
+    authNote: "projects.moawen.notes",
   },
   {
     id: "arsl",
