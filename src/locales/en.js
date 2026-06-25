@@ -115,12 +115,11 @@ const en = {
     title: "Selected work",
     subtitle:
       "Production front-ends — e-commerce, SaaS dashboards, healthcare, and corporate sites.",
-    moaawen: {
-      title: "Moaawen Platform",
+    moawen: {
+      title: "Moawen Platform",
       description:
         "Multi-role freelance platform connecting clients and freelancers through a mobile app and advanced admin dashboard. Contributed to building the landing page and dashboard using Next.js, React, MUI, and Tailwind CSS with multilingual support, role permissions, analytics, chats, projects, services, notifications, and dynamic system settings.",
-      notes:
-        "💡 Guest account for the control panel: guest@guest.com | 12345678",
+      notes: "💡 Guest account for the control panel: g@g.com | guest@123456",
     },
     masa: {
       title: "Masa Toys Store",

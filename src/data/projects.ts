@@ -17,9 +17,9 @@ const publicImage = (file: string) =>
 
 export const PROJECTS: Project[] = [
   {
-    id: "moaawen",
-    titleKey: "projects.moaawen.title",
-    descriptionKey: "projects.moaawen.description",
+    id: "moawen",
+    titleKey: "projects.moawen.title",
+    descriptionKey: "projects.moawen.description",
     tech: [
       "Next.js",
       "React",
@@ -35,8 +35,8 @@ export const PROJECTS: Project[] = [
       "Vite",
     ],
     image: publicImage("moaawen.jpeg"),
-    demoUrl: "https://moaawen-landing.vercel.app/ar/home",
-    dashboardUrl: "https://moaawen-dashbaord.vercel.app",
+    demoUrl: "https://moawen.sa",
+    dashboardUrl: "http://app.moawen.sa",
     authNote: "projects.wsl.notes",
   },
   {
