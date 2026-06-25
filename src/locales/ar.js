@@ -7,7 +7,7 @@ const ar = {
   common: {
     logo: "بلال",
     loading: "جاري تحميل التجربة…",
-    viewDemo: "معاينة مباشرة",
+    viewDemo: "موقع مباشر",
     viewCode: "المصدر",
     submit: "إرسال الرسالة",
     sending: "جاري الإرسال…",

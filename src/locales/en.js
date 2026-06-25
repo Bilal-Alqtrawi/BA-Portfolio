@@ -7,7 +7,7 @@ const en = {
   common: {
     logo: "Bilal",
     loading: "Loading experience…",
-    viewDemo: "Live demo",
+    viewDemo: "Live Site",
     viewCode: "Source",
     submit: "Send message",
     sending: "Sending…",
