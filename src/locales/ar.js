@@ -53,8 +53,8 @@ const ar = {
       { title: "React و Next.js", desc: "SaaS · لوحات · تجارة · رعاية صحية" },
     ],
     resumeLabel: "السيرة الذاتية",
-    resumeCta: "تحميل PDF",
-    resumeHref: "/Bilal-CV.pdf",
+    resumeCta: "عرض السيرة الذاتية",
+    resumeHref: "https://bilal-alqtrawi.github.io/BA-Portfolio/Bilal-CV.pdf",
   },
   skills: {
     title: "المهارات",

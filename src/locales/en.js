@@ -58,7 +58,7 @@ const en = {
       },
     ],
     resumeLabel: "Résumé",
-    resumeCta: "Download PDF",
+    resumeCta: "View Resume",
     resumeHref: "https://bilal-alqtrawi.github.io/BA-Portfolio/Bilal-CV.pdf",
   },
   skills: {
