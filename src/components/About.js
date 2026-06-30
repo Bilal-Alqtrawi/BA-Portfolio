@@ -10,9 +10,18 @@ export default function About() {
   const isDarkMode = useSelector((s) => s.theme.isDarkMode);
 
   const highlights = [
-    { title: t("about.highlights.0.title"), desc: t("about.highlights.0.desc") },
-    { title: t("about.highlights.1.title"), desc: t("about.highlights.1.desc") },
-    { title: t("about.highlights.2.title"), desc: t("about.highlights.2.desc") },
+    {
+      title: t("about.highlights.0.title"),
+      desc: t("about.highlights.0.desc"),
+    },
+    {
+      title: t("about.highlights.1.title"),
+      desc: t("about.highlights.1.desc"),
+    },
+    {
+      title: t("about.highlights.2.title"),
+      desc: t("about.highlights.2.desc"),
+    },
   ];
 
   return (
@@ -45,7 +54,9 @@ export default function About() {
               </span>
               <a
                 href={t("about.resumeHref")}
-                download
+                // download
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 rounded-full bg-ink-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-600 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-brand-400 dark:hover:text-zinc-950"
               >
                 {t("about.resumeCta")}
@@ -67,7 +78,9 @@ export default function About() {
                   <p className="font-display text-2xl text-brand-600 dark:text-brand-400">
                     {h.title}
                   </p>
-                  <p className="mt-2 text-sm text-ink-600 dark:text-zinc-400">{h.desc}</p>
+                  <p className="mt-2 text-sm text-ink-600 dark:text-zinc-400">
+                    {h.desc}
+                  </p>
                 </div>
               </Reveal>
             ))}
