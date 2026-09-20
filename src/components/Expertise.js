@@ -31,13 +31,23 @@ export default function Expertise() {
           {cards.map((card, i) => (
             <Reveal key={card.title} delay={i * 0.08}>
               <article
-                className={`group relative h-full overflow-hidden rounded-2xl border p-8 transition duration-300 hover:-translate-y-1 hover:shadow-card ${
+                className={`group relative h-full overflow-hidden rounded-2xl border p-8 transition duration-300 ${
+                  i === 1
+                    ? "border-ink-100 bg-ink-50/50 border-brand-500/3 shadow-card -translate-y-1"
+                    : ""
+                } hover:-translate-y-1 hover:shadow-card ${
                   isDarkMode
                     ? "border-zinc-800 bg-zinc-950/70 hover:border-brand-500/35"
                     : "border-ink-100 bg-ink-50/50 hover:border-brand-500/30"
                 }`}
               >
-                <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-500 via-rose-400 to-amber-400 opacity-0 transition group-hover:opacity-100" />
+                <div
+                  className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-500 via-rose-400 to-amber-400 transition-opacity duration-300 ${
+                    i === 1
+                      ? "opacity-100 group-hover:opacity-0"
+                      : "opacity-0 group-hover:opacity-100"
+                  }`}
+                />
                 <h3 className="font-display text-xl text-ink-950 dark:text-white">
                   {card.title}
                 </h3>

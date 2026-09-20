@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useForm } from "@formspree/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPhone,
   faUser,
   faLocationDot,
   faEnvelope,
+  faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import Social from "./Social";
@@ -15,7 +17,7 @@ import { useI18n } from "../context/I18nContext";
 import Reveal from "./ui/Reveal";
 import SectionHeading from "./ui/SectionHeading";
 
-library.add(faPhone, faUser, faLocationDot, faEnvelope);
+library.add(faPhone, faUser, faLocationDot, faEnvelope, faCircleCheck);
 
 const initialForm = {
   name: "",
@@ -29,32 +31,68 @@ export default function Contact() {
   const { t } = useI18n();
   const isDarkMode = useSelector((s) => s.theme.isDarkMode);
   const [form, setForm] = useState(initialForm);
-  const [submitting, setSubmitting] = useState(false);
+  const [state, handleSubmit, resetForm] = useForm("mvkgkodg");
 
   const onChange = (e) => {
     const { name, value } = e.target;
     setForm((f) => ({ ...f, [name]: value }));
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (!form.email.trim()) {
-      toast.error(t("toast.needEmail"));
-      return;
+  useEffect(() => {
+    if (state.result === "error") {
+      toast.error(t("toast.errorSubmit"));
     }
-    setSubmitting(true);
-    const mailtoUrl = `mailto:${t("contact.emailValue")}?subject=${encodeURIComponent(
-      form.subject || "Portfolio",
-    )}&body=${encodeURIComponent(
-      `Name: ${form.name}\nPhone: ${form.phone}\n\n${form.message}`,
-    )}`;
-    toast.success(t("toast.sent"));
-    setTimeout(() => {
-      window.location.href = mailtoUrl;
-      setForm(initialForm);
-      setSubmitting(false);
-    }, 600);
-  };
+  }, [state.result, t]);
+
+  if (state.succeeded) {
+    return (
+      <section
+        id="contact"
+        className={`scroll-mt-24 py-20 md:py-28 ${
+          isDarkMode ? "bg-zinc-900" : "bg-white"
+        }`}
+      >
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <SectionHeading
+              title={t("contact.title")}
+              subtitle={t("contact.subtitle")}
+            />
+          </Reveal>
+
+          <Reveal className="max-w-md mx-auto">
+            <div
+              className={`flex flex-col items-center rounded-2xl border p-10 text-center shadow-sm ${
+                isDarkMode
+                  ? "border-zinc-800 bg-zinc-950/60"
+                  : "border-ink-100 bg-ink-50/60"
+              }`}
+            >
+              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-500/15 text-brand-600 dark:text-brand-400">
+                <FontAwesomeIcon icon={faCircleCheck} className="h-8 w-8" />
+              </span>
+              <h3 className="mt-6 font-display text-2xl text-ink-950 dark:text-white">
+                {t("contact.successTitle")}
+              </h3>
+              <p className="mt-3 leading-relaxed text-ink-700 dark:text-zinc-400">
+                {t("contact.successBody")}
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setForm(initialForm);
+                  resetForm();
+                }}
+                className="mt-8 rounded-full bg-ink-900 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-600 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-brand-400"
+              >
+                {t("contact.successCta")}
+              </button>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    );
+  }
 
   const field =
     "w-full rounded-xl border border-ink-200/90 bg-white px-4 py-3 text-ink-900 outline-none transition placeholder:text-ink-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-brand-400";
@@ -157,7 +195,7 @@ export default function Contact() {
 
           <Reveal delay={0.08}>
             <form
-              onSubmit={onSubmit}
+              onSubmit={handleSubmit}
               className={`rounded-2xl border p-8 shadow-sm ${
                 isDarkMode
                   ? "border-zinc-800 bg-zinc-950/60"
@@ -237,10 +275,10 @@ export default function Contact() {
               </div>
               <button
                 type="submit"
-                disabled={submitting}
+                disabled={state.submitting}
                 className="mt-8 w-full rounded-full bg-brand-600 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-500 disabled:cursor-wait disabled:opacity-70 sm:w-auto sm:min-w-[200px] sm:px-10"
               >
-                {submitting ? t("common.sending") : t("common.submit")}
+                {state.submitting ? t("common.sending") : t("common.submit")}
               </button>
             </form>
           </Reveal>

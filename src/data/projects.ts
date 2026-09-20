@@ -1,7 +1,8 @@
 export type Project = {
   id: string;
   titleKey: string;
-  descriptionKey: string;
+  shortDescriptionKey: string;
+  longDescriptionKey: string;
   tech: string[];
   image: string;
   /** Live site — add your URL when ready */
@@ -17,9 +18,43 @@ const publicImage = (file: string) =>
 
 export const PROJECTS: Project[] = [
   {
+    id: "qira",
+    titleKey: "projects.qira.title",
+    shortDescriptionKey: "projects.qira.shortDescription",
+    longDescriptionKey: "projects.qira.longDescription",
+    tech: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Open Graph / Media Assets",
+    ],
+    image: publicImage("qira.jpg"),
+    demoUrl: "https://www.qira.ltd",
+  },
+  {
+    id: "nexvio",
+    titleKey: "projects.nexvio.title",
+    shortDescriptionKey: "projects.nexvio.shortDescription",
+    longDescriptionKey: "projects.nexvio.longDescription",
+    tech: [
+      "React",
+      "TypeScript",
+      "3D Map Visualization",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Custom UI Themes",
+    ],
+
+    image: publicImage("nexvio.png"),
+    demoUrl: "https://nexvio.ae/home",
+  },
+  {
     id: "moawen",
     titleKey: "projects.moawen.title",
-    descriptionKey: "projects.moawen.description",
+    shortDescriptionKey: "projects.moawen.shortDescription",
+    longDescriptionKey: "projects.moawen.longDescription",
     tech: [
       "Next.js",
       "React",
@@ -42,7 +77,8 @@ export const PROJECTS: Project[] = [
   {
     id: "arsl",
     titleKey: "projects.arsl.title",
-    descriptionKey: "projects.arsl.description",
+    shortDescriptionKey: "projects.arsl.shortDescription",
+    longDescriptionKey: "projects.arsl.longDescription",
     tech: [
       "Next.js",
       "MUI",
@@ -55,13 +91,14 @@ export const PROJECTS: Project[] = [
     ],
     image: publicImage("arsl-project.png"),
     dashboardUrl: "https://admin.arsl-app.com",
-    authNote: "projects.wsl.notes",
+    // authNote removed - no specific auth notes for this project
     // repoUrl: "https://your-masa-toys-url.com",
   },
   {
     id: "masa",
     titleKey: "projects.masa.title",
-    descriptionKey: "projects.masa.description",
+    shortDescriptionKey: "projects.masa.shortDescription",
+    longDescriptionKey: "projects.masa.longDescription",
     tech: [
       "React",
       "Redux Toolkit",
@@ -71,14 +108,15 @@ export const PROJECTS: Project[] = [
       "Swiper",
       "React Hook Form",
     ],
-    image: publicImage("masa.png"),
+    image: publicImage("masa-1.png"),
     demoUrl: "https://www.masatoys.com/home",
     // repoUrl: "https://github.com/Masa-Store/app-frontend",
   },
   {
     id: "alghaith",
     titleKey: "projects.alghaith.title",
-    descriptionKey: "projects.alghaith.description",
+    shortDescriptionKey: "projects.alghaith.shortDescription",
+    longDescriptionKey: "projects.alghaith.longDescription",
     tech: ["Next.js", "Tailwind CSS", "Shadcn/UI", "SSR/SSG", "Server Actions"],
     image: publicImage("alghaith.jpeg"),
     demoUrl: "https://gkl.sa",
@@ -87,7 +125,8 @@ export const PROJECTS: Project[] = [
   {
     id: "wsl",
     titleKey: "projects.wsl.title",
-    descriptionKey: "projects.wsl.description",
+    shortDescriptionKey: "projects.wsl.shortDescription",
+    longDescriptionKey: "projects.wsl.longDescription",
     tech: [
       "React",
       "Supabase",
@@ -97,7 +136,7 @@ export const PROJECTS: Project[] = [
       "Excel Export",
     ],
     image: publicImage("wsl.png"),
-    demoUrl: "https://wsl.co.il",
+    demoUrl: "https://wsl-driver-form-page.vercel.app/",
     dashboardUrl: "https://wsl-dashboard.netlify.app/dashboard",
     authNote: "projects.wsl.notes",
   },
