@@ -5,6 +5,7 @@ import {
   faGithub,
   faInstagram,
   faLinkedinIn,
+  faTelegram,
   faWhatsapp,
 } from "@fortawesome/free-brands-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -41,7 +42,7 @@ export default function Social({ variant = "default" }) {
       </li>
       <li>
         <a
-          href="https://www.facebook.com/bilal.alqtrawi"
+          href="https://www.facebook.com/bilal.qatrawi"
           target="_blank"
           rel="noreferrer"
           className="transition hover:text-[#1877f2]"
@@ -81,6 +82,17 @@ export default function Social({ variant = "default" }) {
           aria-label="LinkedIn"
         >
           <FontAwesomeIcon className="fa-2x" icon={faLinkedinIn} />
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://t.me/bilalAlqatrawi"
+          target="_blank"
+          rel="noreferrer"
+          className="transition hover:text-[#24A1DE]"
+          aria-label="LinkedIn"
+        >
+          <FontAwesomeIcon className="fa-2x" icon={faTelegram} />
         </a>
       </li>
     </ul>
