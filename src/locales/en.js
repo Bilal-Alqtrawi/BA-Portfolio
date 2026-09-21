@@ -156,13 +156,16 @@ const en = {
       school: "Al-Azhar University – Gaza",
       degree: "B.Sc. in Software Engineering",
       period: "Class of 2025",
-      desc:
-        "Focused on web development, OOP, data structures & algorithms, database systems, software testing, cloud computing, and requirements engineering.",
+      desc: "Focused on web development, OOP, data structures & algorithms, database systems, software testing, cloud computing, and requirements engineering.",
     },
     certifications: {
       title: "Certifications & training",
       items: [
-        { name: "Top-tech Center", label: "Java Programming Course", year: "2021" },
+        {
+          name: "Top-tech Center",
+          label: "Java Programming Course",
+          year: "2021",
+        },
         {
           name: "Kuwaiti Training Center",
           label: "Full Stack Web Development",
@@ -173,7 +176,11 @@ const en = {
           label: "The Ultimate React Course 2024",
           year: "2024",
         },
-        { name: "Elzero Web School", label: "Advanced Front-End Track", year: "" },
+        {
+          name: "Elzero Web School",
+          label: "Advanced Front-End Track",
+          year: "",
+        },
       ],
     },
   },
@@ -263,7 +270,8 @@ const en = {
     messagePh: "What are we building?",
     success: "Opening your mail client…",
     successTitle: "Message sent!",
-    successBody: "Thanks for reaching out — I'll get back to you as soon as possible.",
+    successBody:
+      "Thanks for reaching out — I'll get back to you as soon as possible.",
     successCta: "Send another message",
     errorRequired: "Email is required.",
     social: "Social",

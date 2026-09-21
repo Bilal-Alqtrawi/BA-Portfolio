@@ -6,6 +6,7 @@ import en from "../locales/en";
 import ar from "../locales/ar";
 
 import profile from "../images/profile-2.jpeg";
+import { ArrowDownIcon } from "@heroicons/react/24/outline";
 
 const MSGS = { en, ar };
 
@@ -51,9 +52,9 @@ export default function Hero() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-500/25 bg-brand-500/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-brand-600 dark:border-brand-400/30 dark:bg-brand-500/10 dark:text-brand-300"
+            className="mb-4 inline-flex items-center gap-2 rounded-lg border border-brand-500/25 bg-brand-500/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-brand-600 dark:border-brand-400/30 dark:bg-brand-500/10 dark:text-brand-300"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-500 animate-pulse" />
+            {/* <span className="h-1.5 w-1.5 rounded-full bg-brand-500 animate-pulse" /> */}
             {t("hero.badge")}
           </motion.p>
 
@@ -116,8 +117,11 @@ export default function Hero() {
             </a>
           </motion.div>
 
-          <p className="mt-14 text-xs font-medium uppercase tracking-[0.2em] text-ink-500 dark:text-zinc-500">
+          <p className="flex  gap-2 mt-14 text-xs font-medium uppercase tracking-[0.2em] text-ink-500 dark:text-zinc-500">
             {t("hero.scroll")}
+            <span className="animate-bounce self-end ">
+              <ArrowDownIcon className="size-3.5" />
+            </span>
           </p>
         </div>
 

@@ -18,7 +18,7 @@ function PeriodBadge({ children }) {
 function PresentBadge({ label }) {
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-500/30 bg-brand-500/10 px-3 py-1 text-xs font-semibold text-brand-600 dark:border-brand-400/30 dark:text-brand-300">
-      <span className="h-1.5 w-1.5 rounded-full bg-brand-500 animate-pulse" />
+      {/* <span className="h-1.5 w-1.5 rounded-full bg-brand-500 animate-pulse" /> */}
       {label}
     </span>
   );
