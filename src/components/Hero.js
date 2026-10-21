@@ -131,7 +131,6 @@ export default function Hero() {
           transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           className="relative mx-auto flex w-full max-w-sm flex-1 items-center justify-center lg:max-w-md"
         >
-          <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-brand-500/30 via-transparent to-amber-400/20 blur-2xl" />
           <div className="relative aspect-square w-full max-w-[320px] sm:max-w-[380px]">
             <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-tr from-brand-500/20 to-transparent" />
             <img
