@@ -130,14 +130,40 @@ const en = {
     title: "What I can help with",
     kicker: "Services",
     subtitle: "The kind of work where I'm most useful to a team or a client.",
+    book: "Book this service",
+    booking: {
+      title: "Book this service",
+      intro:
+        "Leave your details and I'll get your request straight to my inbox, then reply to confirm the next steps.",
+      note: "Notes",
+      notePh: "Optional — a line about your project or deadline",
+      confirm: "Confirm booking",
+      cancel: "Cancel",
+      close: "Close",
+      successTitle: "Request sent!",
+      successBody:
+        "Your booking request reached me. I'll contact you shortly to confirm the details.",
+    },
     cards: [
       {
         title: "Dashboards & SaaS",
         body: "Admin panels with roles and permissions, data-heavy tables, filters and charts. I build reusable components so the tenth screen is as consistent as the first.",
       },
       {
-        title: "Stores & marketing sites",
-        body: "Product listings, filters, carts and multi-step checkout — plus landing pages that load fast, rank well and still have a bit of motion where it helps.",
+        title: "Online stores",
+        body: "Product listings, filters, carts and multi-step checkout, built to be fast on mobile and to work in Arabic and English.",
+      },
+      {
+        title: "Landing pages",
+        body: "Focused one-page sites designed to convert: clear message, fast load, SEO basics and a contact or booking form that reaches you directly.",
+      },
+      {
+        title: "Company & portfolio websites",
+        body: "Multi-section websites for businesses and professionals: services, work, about and contact — responsive, bilingual and easy to update.",
+      },
+      {
+        title: "Domain & hosting setup",
+        body: "I connect your domain, configure DNS and SSL, and deploy your site on the hosting you choose (GitHub Pages, Vercel, Netlify or shared hosting), so it goes live without the headache.",
       },
       {
         title: "Fixing & speeding things up",
