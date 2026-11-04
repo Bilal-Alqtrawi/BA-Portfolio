@@ -1,3 +1,4 @@
+import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -48,14 +49,14 @@ export default function Contact() {
     return (
       <section
         id="contact"
-        className={`scroll-mt-24 py-20 md:py-28 ${
-          isDarkMode ? "bg-zinc-900" : "bg-white"
-        }`}
+        className="scroll-mt-16 bg-ink-50 py-20 md:py-28 dark:bg-zinc-950"
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <Reveal>
             <SectionHeading
-              title={t("contact.title")}
+              icon={ChatBubbleLeftRightIcon}
+              eyebrow={t("contact.kicker")}
+              title={t("contact.heading")}
               subtitle={t("contact.subtitle")}
             />
           </Reveal>
@@ -64,8 +65,8 @@ export default function Contact() {
             <div
               className={`flex flex-col items-center rounded-2xl border p-10 text-center shadow-sm ${
                 isDarkMode
-                  ? "border-zinc-800 bg-zinc-950/60"
-                  : "border-ink-100 bg-ink-50/60"
+                  ? "border-zinc-800 bg-zinc-900"
+                  : "border-ink-200/80 bg-white"
               }`}
             >
               <span className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-500/15 text-brand-600 dark:text-brand-400">
@@ -95,19 +96,19 @@ export default function Contact() {
   }
 
   const field =
-    "w-full rounded-xl border border-ink-200/90 bg-white px-4 py-3 text-ink-900 outline-none transition placeholder:text-ink-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-brand-400";
+    "w-full rounded-xl border border-ink-200/90 bg-ink-50/60 px-4 py-3 text-ink-900 outline-none transition placeholder:text-ink-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-brand-400";
 
   return (
     <section
       id="contact"
-      className={`scroll-mt-24 py-20 md:py-28 ${
-        isDarkMode ? "bg-zinc-900" : "bg-white"
-      }`}
+      className="scroll-mt-16 bg-ink-50 py-20 md:py-28 dark:bg-zinc-950"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
-            title={t("contact.title")}
+            icon={ChatBubbleLeftRightIcon}
+            eyebrow={t("contact.kicker")}
+            title={t("contact.heading")}
             subtitle={t("contact.subtitle")}
           />
         </Reveal>
@@ -115,10 +116,10 @@ export default function Contact() {
         <div className="grid gap-8 lg:grid-cols-2">
           <Reveal>
             <div
-              className={`h-full rounded-2xl border p-8 shadow-sm ${
+              className={`rounded-2xl border p-8 shadow-sm ${
                 isDarkMode
-                  ? "border-zinc-800 bg-zinc-950/60"
-                  : "border-ink-100 bg-ink-50/60"
+                  ? "border-zinc-800 bg-zinc-900"
+                  : "border-ink-200/80 bg-white"
               }`}
             >
               <h3 className="font-display text-2xl text-ink-950 dark:text-white">
@@ -130,7 +131,7 @@ export default function Contact() {
                     <FontAwesomeIcon icon={faUser} />
                   </span>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                    <p className="text-xs font-semibold text-ink-500 dark:text-zinc-400">
                       {t("contact.name")}
                     </p>
                     <p className="mt-1">{t("contact.fullName")}</p>
@@ -141,7 +142,7 @@ export default function Contact() {
                     <FontAwesomeIcon icon={faPhone} />
                   </span>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                    <p className="text-xs font-semibold text-ink-500 dark:text-zinc-400">
                       {t("contact.phone")}
                     </p>
                     <a
@@ -161,7 +162,7 @@ export default function Contact() {
                     <FontAwesomeIcon icon={faEnvelope} />
                   </span>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                    <p className="text-xs font-semibold text-ink-500 dark:text-zinc-400">
                       {t("contact.email")}
                     </p>
                     <a
@@ -198,8 +199,8 @@ export default function Contact() {
               onSubmit={handleSubmit}
               className={`rounded-2xl border p-8 shadow-sm ${
                 isDarkMode
-                  ? "border-zinc-800 bg-zinc-950/60"
-                  : "border-ink-100 bg-white"
+                  ? "border-zinc-800 bg-zinc-900"
+                  : "border-ink-200/80 bg-white"
               }`}
             >
               <h3 className="font-display text-2xl text-ink-950 dark:text-white">
@@ -207,7 +208,7 @@ export default function Contact() {
               </h3>
               <div className="mt-8 grid gap-5 sm:grid-cols-2">
                 <label className="block sm:col-span-1">
-                  <span className="mb-2 block text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                  <span className="mb-2 block text-sm font-semibold text-ink-700 dark:text-zinc-300">
                     {t("contact.name")}
                   </span>
                   <input
@@ -220,7 +221,7 @@ export default function Contact() {
                   />
                 </label>
                 <label className="block sm:col-span-1">
-                  <span className="mb-2 block text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                  <span className="mb-2 block text-sm font-semibold text-ink-700 dark:text-zinc-300">
                     {t("contact.phone")}
                   </span>
                   <input
@@ -233,7 +234,7 @@ export default function Contact() {
                   />
                 </label>
                 <label className="block sm:col-span-2">
-                  <span className="mb-2 block text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                  <span className="mb-2 block text-sm font-semibold text-ink-700 dark:text-zinc-300">
                     {t("contact.email")}
                   </span>
                   <input
@@ -248,7 +249,7 @@ export default function Contact() {
                   />
                 </label>
                 <label className="block sm:col-span-2">
-                  <span className="mb-2 block text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                  <span className="mb-2 block text-sm font-semibold text-ink-700 dark:text-zinc-300">
                     {t("contact.subject")}
                   </span>
                   <input
@@ -260,7 +261,7 @@ export default function Contact() {
                   />
                 </label>
                 <label className="block sm:col-span-2">
-                  <span className="mb-2 block text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-zinc-500">
+                  <span className="mb-2 block text-sm font-semibold text-ink-700 dark:text-zinc-300">
                     {t("contact.message")}
                   </span>
                   <textarea

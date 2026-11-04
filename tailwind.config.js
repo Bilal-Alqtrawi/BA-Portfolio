@@ -14,6 +14,10 @@ module.exports = {
           50: "#fafafa",
           100: "#f4f4f5",
           200: "#e4e4e7",
+          300: "#d4d4d8",
+          400: "#a1a1aa",
+          500: "#71717a",
+          600: "#52525b",
           700: "#3f3f46",
           800: "#27272a",
           900: "#18181b",
@@ -34,19 +38,9 @@ module.exports = {
         22: "5.5rem",
       },
       boxShadow: {
-        glow: "0 0 80px -20px rgba(244, 63, 94, 0.35)",
         card: "0 4px 6px -1px rgb(0 0 0 / 0.06), 0 12px 24px -6px rgb(0 0 0 / 0.08)",
         "card-dark":
           "0 4px 6px -1px rgb(0 0 0 / 0.4), 0 18px 40px -12px rgb(0 0 0 / 0.55)",
-      },
-      backgroundImage: {
-        "hero-glow":
-          "radial-gradient(ellipse 80% 55% at 50% -10%, rgba(244,63,94,0.18), transparent 55%)",
-        "hero-glow-dark":
-          "radial-gradient(ellipse 80% 55% at 50% -10%, rgba(244,63,94,0.22), transparent 55%)",
-      },
-      backgroundSize: {
-        grid: "64px 64px",
       },
       transitionDuration: {
         400: "400ms",

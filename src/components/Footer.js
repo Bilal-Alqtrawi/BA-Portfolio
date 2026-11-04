@@ -5,9 +5,9 @@ import Social from "./Social";
 const FOOTER_NAV = [
   { hash: "#home", key: "nav.home" },
   { hash: "#about", key: "nav.about" },
-  { hash: "#skills", key: "nav.skills" },
-  { hash: "#expertise", key: "nav.expertise" },
+  { hash: "#experience", key: "nav.experience" },
   { hash: "#projects", key: "nav.projects" },
+  { hash: "#skills", key: "nav.skills" },
   { hash: "#contact", key: "nav.contact" },
 ];
 

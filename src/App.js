@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Provider, useSelector } from "react-redux";
+import { MotionConfig } from "framer-motion";
 import store from "./redux/store";
 import "./App.css";
 import { I18nProvider, useI18n } from "./context/I18nContext";
@@ -12,7 +13,7 @@ import Experience from "./components/Experience";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import PageLoader from "./components/PageLoader";
+import { BackToTop } from "./components/ui/ScrollExtras";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -40,6 +41,7 @@ function MetaTitle() {
 
 function AppShell() {
   return (
+    <MotionConfig reducedMotion="user">
     <ThemeRoot>
       <MetaTitle />
       <ToastContainer
@@ -48,19 +50,20 @@ function AppShell() {
         autoClose={2800}
         hideProgressBar
       />
-      <PageLoader />
       <Header />
-      <main>
+      <main id="main">
         <Hero />
         <About />
-        <Skills />
-        <Expertise />
         <Experience />
         <Projects />
+        <Expertise />
+        <Skills />
         <Contact />
       </main>
       <Footer />
+      <BackToTop />
     </ThemeRoot>
+    </MotionConfig>
   );
 }
 

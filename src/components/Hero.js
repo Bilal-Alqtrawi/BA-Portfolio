@@ -1,152 +1,187 @@
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
+import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import { useI18n } from "../context/I18nContext";
+import { WHATSAPP_URL } from "../data/contact";
 import en from "../locales/en";
 import ar from "../locales/ar";
-
-import profile from "../images/profile-2.jpeg";
-import { ArrowDownIcon } from "@heroicons/react/24/outline";
+import profile from "../images/profile-portrait.webp";
 
 const MSGS = { en, ar };
 
+const fadeIn = (delay = 0) => ({
+  initial: { opacity: 0, y: 8 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.4, delay, ease: "easeOut" },
+});
+
+/** Hand-drawn marker stroke under a word. Pure SVG + CSS, draws itself once. */
+function Scribble() {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 220 24"
+      preserveAspectRatio="none"
+      className="pointer-events-none absolute -bottom-2 start-0 h-3.5 w-full text-brand-500 sm:-bottom-3 sm:h-4"
+    >
+      <path
+        className="scribble-draw"
+        d="M3 15c38-7 92-11 140-9 27 1 51 3 74 6M18 20c46-5 104-7 158-3"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export default function Hero() {
   const { t, locale } = useI18n();
-  const isDarkMode = useSelector((s) => s.theme.isDarkMode);
-  const roles = MSGS[locale].hero.roles;
-  const [idx, setIdx] = useState(0);
-  const [fade, setFade] = useState(true);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setFade(false);
-      setTimeout(() => {
-        setIdx((i) => (i + 1) % roles.length);
-        setFade(true);
-      }, 320);
-    }, 3200);
-    return () => clearInterval(interval);
-  }, [roles.length]);
+  const workedOn = MSGS[locale].hero.workedOn;
 
   return (
-    <section
-      id="home"
-      className={`relative isolate min-h-screen overflow-hidden pt-24 pb-16 md:pt-28 ${
-        isDarkMode ? "bg-zinc-950 bg-hero-glow-dark" : "bg-zinc-50 bg-hero-glow"
-      }`}
-    >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.35] dark:opacity-25"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgb(0 0 0 / 0.04) 1px, transparent 1px), linear-gradient(90deg, rgb(0 0 0 / 0.04) 1px, transparent 1px)",
-          backgroundSize: "72px 72px",
-        }}
-      />
-      <div className="pointer-events-none absolute inset-0 dark:hidden bg-gradient-to-b from-white/80 to-zinc-50" />
-      <div className="pointer-events-none absolute inset-0 hidden dark:block bg-gradient-to-b from-zinc-950/90 to-zinc-950" />
-
-      <div className="relative z-10 mx-auto flex max-w-6xl flex-col gap-14 px-4 sm:px-6 lg:flex-row lg:items-center lg:gap-10 lg:px-8">
-        <div className="max-w-2xl flex-1">
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-4 inline-flex items-center gap-2 rounded-lg border border-brand-500/25 bg-brand-500/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-brand-600 dark:border-brand-400/30 dark:bg-brand-500/10 dark:text-brand-300"
-          >
-            {/* <span className="h-1.5 w-1.5 rounded-full bg-brand-500 animate-pulse" /> */}
-            {t("hero.badge")}
-          </motion.p>
-
+    <section id="home" className="bg-zinc-50 pb-14 pt-10 sm:pt-14 md:pb-16 lg:pt-16 dark:bg-zinc-950">
+      <div className="mx-auto grid max-w-6xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8">
+        <div className="lg:col-span-7">
           <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.05 }}
-            className="font-display text-display-sm sm:text-display md:text-display-lg text-ink-950 dark:text-white"
+            {...fadeIn(0)}
+            className="font-display text-4xl font-bold leading-tight text-ink-950 sm:text-5xl lg:text-[3.4rem] dark:text-white"
           >
-            <span className="block text-ink-600 dark:text-zinc-400 text-2xl sm:text-3xl font-sans font-medium tracking-tight">
-              {t("hero.greeting")}
-            </span>
-            <span className="mt-2 pb-3 block bg-gradient-to-r from-brand-600 via-rose-500 to-amber-500 bg-clip-text text-transparent">
-              {t("hero.name")}
-            </span>
+            {t("hero.helloPrefix")}{" "}
+            <span className="relative inline-block whitespace-nowrap">
+              {t("hero.firstName")}
+              <Scribble />
+            </span>{" "}
+            {t("hero.lastName")}
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.12 }}
-            className="mt-6 text-xl font-medium text-ink-800 dark:text-zinc-200 md:text-2xl"
+            {...fadeIn(0.06)}
+            className="mt-5 text-lg font-medium text-ink-600 dark:text-zinc-400"
           >
-            {t("hero.rolePrefix")}{" "}
-            <span
-              className={`inline-block text-brand-600 dark:text-brand-400 transition-opacity duration-300 ${
-                fade ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              {roles[idx]}.
-            </span>
+            {t("hero.role")}
           </motion.p>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.18 }}
-            className="mt-5 max-w-xl text-lg leading-relaxed text-ink-700 dark:text-zinc-400"
-          >
-            {t("hero.subtitle")}
-          </motion.p>
+          <motion.div {...fadeIn(0.1)} className="mt-7 max-w-xl space-y-4">
+            <p className="text-lg leading-relaxed text-ink-800 md:text-xl dark:text-zinc-200">
+              {t("hero.tagline")}
+            </p>
+            <p className="text-base leading-relaxed text-ink-600 md:text-lg dark:text-zinc-400">
+              {t("hero.now")}
+            </p>
+          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.24 }}
-            className="mt-10 flex flex-wrap gap-4"
-          >
+          <motion.div {...fadeIn(0.15)} className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
             <a
               href="#projects"
-              className="inline-flex items-center justify-center rounded-full bg-brand-600 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-600/25 transition hover:bg-brand-500 hover:shadow-brand-500/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
+              className="group inline-flex items-center gap-2 rounded-lg bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
             >
               {t("hero.ctaPrimary")}
+              <span
+                aria-hidden
+                className="transition-transform duration-200 group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5"
+              >
+                →
+              </span>
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center rounded-full border border-ink-200 bg-white/80 px-8 py-3 text-sm font-semibold text-ink-900 backdrop-blur transition hover:border-brand-500/40 hover:text-brand-700 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:border-brand-400/40 dark:hover:text-brand-300"
+              className="text-sm font-semibold text-ink-900 underline decoration-ink-300 decoration-2 underline-offset-[6px] transition-colors hover:decoration-brand-500 dark:text-zinc-100 dark:decoration-zinc-600 dark:hover:decoration-brand-400"
             >
               {t("hero.ctaSecondary")}
             </a>
+            <a
+              href={t("about.resumeHref")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-600 transition-colors hover:text-ink-950 dark:text-zinc-400 dark:hover:text-white"
+            >
+              <ArrowDownTrayIcon aria-hidden className="h-4 w-4" />
+              {t("hero.cv")}
+            </a>
           </motion.div>
 
-          <p className="flex  gap-2 mt-14 text-xs font-medium uppercase tracking-[0.2em] text-ink-500 dark:text-zinc-500">
-            {t("hero.scroll")}
-            <span className="animate-bounce self-end ">
-              <ArrowDownIcon className="size-3.5" />
-            </span>
-          </p>
+          {/* Availability, said the way a person would say it */}
+          <motion.p
+            {...fadeIn(0.2)}
+            className="mt-6 text-sm text-ink-600 dark:text-zinc-400"
+          >
+            {t("hero.availability")}{" "}
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-emerald-700 underline decoration-emerald-600/30 underline-offset-4 transition-colors hover:decoration-emerald-600 dark:text-emerald-400 dark:decoration-emerald-400/30"
+            >
+              {t("hero.availabilityLink")}
+            </a>
+            .
+          </motion.p>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.94 }}
+        {/* Portrait: head & shoulders in a circle, thin brand ring, dotted pattern behind */}
+        <motion.figure
+          initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto flex w-full max-w-sm flex-1 items-center justify-center lg:max-w-md"
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="group relative order-first mx-auto w-full max-w-[200px] sm:max-w-[280px] lg:order-none lg:col-span-5 lg:max-w-[360px]"
         >
-          <div className="relative aspect-square w-full max-w-[320px] sm:max-w-[380px]">
-            <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-tr from-brand-500/20 to-transparent" />
-            <img
-              src={profile}
-              alt={t("hero.name")}
-              className="relative z-10 h-full w-full rounded-[2rem] object-cover shadow-card ring-1 ring-black/5 dark:shadow-card-dark dark:ring-white/10"
-            />
-            <motion.div
-              aria-hidden
-              className="pointer-events-none absolute -bottom-6 -end-6 z-20 hidden h-28 w-28 rounded-2xl border border-white/20 bg-zinc-900/90 shadow-xl sm:block dark:bg-zinc-800/90"
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            />
+          {/* dotted pattern, offset to the top-end corner */}
+          <div
+            aria-hidden
+            className="absolute -end-6 -top-6 h-28 w-28 text-ink-300 sm:h-48 sm:w-48 dark:text-zinc-700"
+            style={{
+              backgroundImage: "radial-gradient(currentColor 1.5px, transparent 1.6px)",
+              backgroundSize: "14px 14px",
+            }}
+          />
+          {/* dotted pattern, bottom-start corner, brand tint */}
+          <div
+            aria-hidden
+            className="absolute -bottom-4 -start-6 h-20 w-20 text-brand-500/40 sm:h-28 sm:w-28"
+            style={{
+              backgroundImage: "radial-gradient(currentColor 1.5px, transparent 1.6px)",
+              backgroundSize: "14px 14px",
+            }}
+          />
+
+          {/* ring: outer brand line with a gap, then the photo */}
+          <div className="relative rounded-full border-2 border-brand-500/80 p-2.5 dark:border-brand-400/80">
+            <div className="overflow-hidden rounded-full bg-ink-100 dark:bg-zinc-800">
+              <img
+                src={profile}
+                alt={t("hero.name")}
+                width="360"
+                height="360"
+                fetchpriority="high"
+                decoding="async"
+                className="aspect-square w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+              />
+            </div>
           </div>
-        </motion.div>
+        </motion.figure>
       </div>
+
+      {/* Social proof: real products, plain text, no logos to load */}
+      <motion.div {...fadeIn(0.25)} className="mx-auto mt-16 max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-4 border-t border-ink-200 pt-6 sm:flex-row sm:items-center sm:gap-8 dark:border-zinc-800">
+          <p className="flex-none text-sm font-medium text-ink-500 dark:text-zinc-500">
+            {t("hero.workedOnLabel")}
+          </p>
+          <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            {workedOn.map((name) => (
+              <li key={name}>
+                <a
+                  href="#projects"
+                  className="font-display text-base font-bold text-ink-400 transition-colors hover:text-ink-950 dark:text-zinc-500 dark:hover:text-white"
+                >
+                  {name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </motion.div>
     </section>
   );
 }

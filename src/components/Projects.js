@@ -1,340 +1,324 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  RectangleStackIcon,
+  ArrowUpRightIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  XMarkIcon,
+  KeyIcon,
+} from "@heroicons/react/24/outline";
 import { useI18n } from "../context/I18nContext";
 import { PROJECTS } from "../data/projects";
 import Dialog from "./ui/Dialog";
 import Reveal from "./ui/Reveal";
 import SectionHeading from "./ui/SectionHeading";
 
-function ArrowY({ className = "" }) {
+const PER_PAGE = 4;
+const TAGS_ON_CARD = 3;
+
+function LiveBadge({ label }) {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 20 20"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M7 7l6 6M13 7v6H7" />
-    </svg>
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-1 text-xs font-semibold text-ink-900 shadow-sm dark:bg-zinc-900/95 dark:text-zinc-100">
+      <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+      {label}
+    </span>
   );
 }
 
-function ArrowNext({ className = "" }) {
+function ProjectCard({ project, wide, onOpen }) {
+  const { t } = useI18n();
+  const title = t(project.titleKey);
+  const extra = project.tech.length - TAGS_ON_CARD;
+
   return (
-    <svg
-      className={className}
-      viewBox="0 0 20 20"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
+    <article
+      className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border border-ink-200/80 bg-white transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-1 hover:border-ink-300 hover:shadow-card dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700 dark:hover:shadow-card-dark ${
+        wide ? "md:grid md:grid-cols-2" : ""
+      }`}
     >
-      <path d="M4 10h12m0 0l-5-5m5 5l-5 5" />
-    </svg>
+      <div
+        className={`relative overflow-hidden bg-ink-100 dark:bg-zinc-800 ${
+          wide ? "aspect-[16/10] md:aspect-auto md:h-full md:min-h-[280px]" : "aspect-[16/10]"
+        }`}
+      >
+        <img
+          src={project.image}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          draggable={false}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+        />
+        {project.demoUrl ? (
+          <span className="absolute start-3 top-3">
+            <LiveBadge label={t("projects.live")} />
+          </span>
+        ) : null}
+      </div>
+
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <h3 className="font-display text-lg font-bold leading-snug text-ink-950 dark:text-white">
+          {/* stretched button: the whole card opens the details */}
+          <button
+            type="button"
+            onClick={() => onOpen(project)}
+            className="text-start after:absolute after:inset-0 after:rounded-2xl after:content-[''] focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-brand-500"
+          >
+            {title}
+          </button>
+        </h3>
+
+        <p className="mt-2 line-clamp-2 text-[0.95rem] leading-relaxed text-ink-600 dark:text-zinc-400">
+          {t(project.shortDescriptionKey)}
+        </p>
+
+        <p className="mt-4 text-sm text-ink-500 dark:text-zinc-500">
+          <bdi>{project.tech.slice(0, TAGS_ON_CARD).join(" · ")}</bdi>
+          {extra > 0 ? <span className="text-ink-400 dark:text-zinc-600"> · +{extra}</span> : null}
+        </p>
+
+        <div className="mt-auto pt-5">
+          <div className="flex items-center justify-between gap-3 border-t border-ink-100 pt-4 dark:border-zinc-800">
+            <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 transition-colors group-hover:text-brand-600 dark:text-zinc-100 dark:group-hover:text-brand-400">
+              {t("projects.more")}
+              <span
+                aria-hidden
+                className="transition-transform duration-200 group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5"
+              >
+                →
+              </span>
+            </span>
+
+            {project.demoUrl ? (
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="relative z-10 inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-sm font-semibold text-ink-600 transition-colors hover:bg-ink-100 hover:text-ink-950 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white"
+              >
+                {t("projects.visit")}
+                <ArrowUpRightIcon aria-hidden className="h-3.5 w-3.5 rtl:-scale-x-100" />
+              </a>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </article>
   );
 }
+
+function Pagination({ page, pages, total, onChange }) {
+  const { t } = useI18n();
+  const from = (page - 1) * PER_PAGE + 1;
+  const to = Math.min(page * PER_PAGE, total);
+  const btn =
+    "inline-flex h-10 items-center justify-center gap-1 rounded-lg border text-sm font-semibold transition-colors disabled:pointer-events-none disabled:opacity-40";
+  const idle =
+    "border-ink-200 bg-white text-ink-800 hover:border-ink-950 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-zinc-300";
+
+  return (
+    <nav
+      aria-label={t("projects.pagination")}
+      className="mt-10 flex flex-col-reverse items-center justify-between gap-4 sm:flex-row"
+    >
+      <p className="text-sm text-ink-500 dark:text-zinc-400" aria-live="polite">
+        {t("projects.showing", { from, to, total })}
+      </p>
+
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => onChange(page - 1)}
+          disabled={page === 1}
+          className={`${btn} ${idle} px-3`}
+        >
+          <ChevronLeftIcon aria-hidden className="h-4 w-4 rtl:-scale-x-100" />
+          <span className="hidden sm:inline">{t("projects.prev")}</span>
+        </button>
+
+        {Array.from({ length: pages }, (_, i) => i + 1).map((n) => (
+          <button
+            key={n}
+            type="button"
+            onClick={() => onChange(n)}
+            aria-current={n === page ? "page" : undefined}
+            aria-label={t("projects.page", { n })}
+            className={`${btn} w-10 tabular-nums ${
+              n === page
+                ? "border-ink-950 bg-ink-950 text-white dark:border-white dark:bg-white dark:text-ink-950"
+                : idle
+            }`}
+          >
+            {n}
+          </button>
+        ))}
+
+        <button
+          type="button"
+          onClick={() => onChange(page + 1)}
+          disabled={page === pages}
+          className={`${btn} ${idle} px-3`}
+        >
+          <span className="hidden sm:inline">{t("projects.next")}</span>
+          <ChevronRightIcon aria-hidden className="h-4 w-4 rtl:-scale-x-100" />
+        </button>
+      </div>
+    </nav>
+  );
+}
+
+const linkBtn =
+  "inline-flex items-center gap-1.5 rounded-lg border border-ink-200 px-5 py-2.5 text-sm font-semibold text-ink-900 transition-colors hover:border-ink-950 dark:border-zinc-700 dark:text-zinc-100 dark:hover:border-zinc-300";
 
 export default function Projects() {
-  const { t, isRTL } = useI18n();
-  const isDarkMode = useSelector((s) => s.theme.isDarkMode);
-  const [loaded, setLoaded] = useState({});
-  const [selectedProject, setSelectedProject] = useState(null);
+  const { t } = useI18n();
+  const [selected, setSelected] = useState(null);
+  const [page, setPage] = useState(1);
+  const sectionRef = useRef(null);
+  const firstRender = useRef(true);
 
-  const openDetails = (project) => setSelectedProject(project);
+  const pages = Math.ceil(PROJECTS.length / PER_PAGE);
+  const visible = PROJECTS.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+  const oddCount = visible.length % 2 === 1;
+
+  // Keep the grid in view when switching pages (skip the first render).
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    const el = sectionRef.current;
+    if (el && el.getBoundingClientRect().top < 0) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [page]);
+
+  const goTo = (n) => setPage(Math.min(Math.max(n, 1), pages));
 
   return (
     <section
       id="projects"
-      className={`scroll-mt-24 py-20 md:py-28 ${
-        isDarkMode ? "bg-zinc-950" : "bg-ink-50"
-      }`}
+      ref={sectionRef}
+      className="scroll-mt-16 bg-white py-20 md:py-28 dark:bg-zinc-900/40"
     >
-      {/* max-w-7xl: Comfortable width for 3-column layout */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
+            icon={RectangleStackIcon}
+            eyebrow={t("projects.kicker")}
             title={t("projects.title")}
             subtitle={t("projects.subtitle")}
           />
         </Reveal>
 
-        {/* Responsive grid: 1 column on mobile, 2 on sm/md, 3 on lg */}
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-          {PROJECTS.map((project, i) => (
-            <Reveal key={project.id} delay={i * 0.05}>
-              <article
-                className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1.5 active:translate-y-0 active:scale-[0.99] ${
-                  isDarkMode
-                    ? "border-zinc-800 bg-zinc-900/70 hover:border-brand-500/40 hover:shadow-card-dark"
-                    : "border-ink-100 bg-white hover:border-brand-500/25 hover:shadow-card"
-                }`}
-                onClick={(e) => {
-                  const target = e.target;
-                  if (!target.closest("a") && !target.closest("button")) {
-                    openDetails(project);
-                  }
-                }}
-              >
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-6 top-0 z-10 h-px bg-gradient-to-r from-transparent via-brand-500/80 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                />
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.ul
+            key={page}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="grid gap-6 md:grid-cols-2"
+          >
+            {visible.map((project, i) => {
+              // odd count on a page: the last card becomes a full-width wide card
+              const wide = oddCount && i === visible.length - 1;
+              return (
+                <li key={project.id} className={wide ? "md:col-span-2" : ""}>
+                  <ProjectCard project={project} wide={wide} onOpen={setSelected} />
+                </li>
+              );
+            })}
+          </motion.ul>
+        </AnimatePresence>
 
-                <div className="relative aspect-[16/10] overflow-hidden bg-zinc-200 dark:bg-zinc-800">
-                  {!loaded[project.id] ? (
-                    <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-zinc-200 via-zinc-100 to-zinc-200 dark:from-zinc-800 dark:via-zinc-700 dark:to-zinc-800" />
-                  ) : null}
-
-                  <img
-                    src={project.image}
-                    alt={t(project.titleKey)}
-                    loading="lazy"
-                    decoding="async"
-                    draggable={false}
-                    onLoad={() =>
-                      setLoaded((s) => ({ ...s, [project.id]: true }))
-                    }
-                    className={`h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05] ${
-                      loaded[project.id] ? "opacity-100" : "opacity-0"
-                    }`}
-                  />
-
-                  {/*
-                    Soft bottom scrim — blends image into the card body.
-                    Static opacity that rises on hover (opacity only).
-                  */}
-                  <div
-                    aria-hidden
-                    className={`pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/55 via-zinc-950/5 to-transparent transition-opacity duration-300 group-hover:opacity-100 ${
-                      isDarkMode ? "opacity-100" : "opacity-60"
-                    } ${isDarkMode ? "" : "group-hover:opacity-100"}`}
-                  />
-
-                  {/*
-                    Editorial index — a hand-numbered serial.
-                  */}
-                  <span className="absolute start-4 top-4 rounded-full border border-white/15 bg-zinc-950/40 px-3 py-1 font-display text-xs font-semibold tabular-nums tracking-[0.18em] text-white/90 backdrop-blur-sm">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                </div>
-
-                {/*
-                  Card body:
-                  - flex-col + flex-1: equal-height columns across the grid
-                */}
-                <div className="flex flex-1 flex-col p-5 sm:p-6">
-                  {/* Title + hover affordance */}
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="font-display text-lg font-semibold leading-snug text-ink-950 transition-colors duration-300 group-hover:text-brand-600 dark:text-white dark:group-hover:text-brand-400">
-                      {t(project.titleKey)}
-                    </h3>
-                    <span
-                      aria-hidden
-                      className={`mt-0.5 flex h-8 w-8 flex-none items-center justify-center rounded-full border border-ink-200 text-ink-500 transition duration-300 group-hover:border-brand-500 group-hover:bg-brand-500 group-hover:text-white ${
-                        isRTL
-                          ? "group-hover:-translate-x-0.5 group-hover:-translate-y-0.5"
-                          : "group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                      } dark:border-zinc-700 dark:text-zinc-400`}
-                    >
-                      <ArrowY className="h-3.5 w-3.5" />
-                    </span>
-                  </div>
-
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-700 dark:text-zinc-400 line-clamp-2">
-                    {t(project.shortDescriptionKey)}
-                  </p>
-
-                  {/*
-                    Tech tags — with a small brand dot separator,
-                    hover lifts the label subtly (translate only).
-                  */}
-                  <ul className="mt-4 flex flex-wrap gap-1.5">
-                    {project.tech.slice(0, 6).map((tag) => (
-                      <li
-                        key={tag}
-                        className="inline-flex items-center gap-1.5 rounded-full border border-ink-200/80 bg-ink-50 px-2.5 py-1 text-xs font-medium text-ink-800 transition-[border-color,color,transform] duration-200 hover:-translate-y-0.5 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
-                      >
-                        <span className="h-1 w-1 rounded-full bg-brand-500/80" />
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Actions — uniform pill row that wraps on small screens */}
-                  {(project.demoUrl ||
-                    project.dashboardUrl ||
-                    project.repoUrl) && (
-                    <div className="mt-auto pt-5">
-                      <div className="flex flex-wrap gap-2 border-t border-dashed border-ink-200/90 pt-4 dark:border-zinc-800">
-                        {project.demoUrl && (
-                          <a
-                            href={project.demoUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-brand-600 px-3 py-1.5 text-center text-xs font-semibold text-white shadow-sm shadow-brand-600/20 transition hover:-translate-y-0.5 hover:bg-brand-500 hover:shadow-brand-500/25 dark:shadow-none"
-                          >
-                            {t("common.viewDemo")}
-                          </a>
-                        )}
-
-                        {project.dashboardUrl && (
-                          <a
-                            href={project.dashboardUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full border border-brand-500/50 bg-transparent px-3 py-1.5 text-xs font-semibold text-brand-600 transition hover:-translate-y-0.5 hover:bg-brand-500 hover:text-white dark:text-brand-400 dark:hover:text-white"
-                          >
-                            لوحة التحكم / Dashboard
-                          </a>
-                        )}
-
-                        {project.repoUrl && (
-                          <a
-                            href={project.repoUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full border border-ink-200 bg-transparent px-3 py-1.5 text-xs font-semibold text-ink-900 transition hover:-translate-y-0.5 hover:border-brand-500/50 hover:text-brand-700 dark:border-zinc-600 dark:text-zinc-100 dark:hover:border-brand-400/50 dark:hover:text-brand-300"
-                          >
-                            {t("common.viewCode")}
-                          </a>
-                        )}
-
-                        {project.authNote && (
-                          <div className="w-full rounded-xl border border-dashed border-brand-500/30 bg-brand-500/5 p-2.5 text-xs leading-normal text-ink-600 dark:text-zinc-400">
-                            {t(project.authNote)}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Accessible details action — also opens the dialog */}
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          openDetails(project);
-                        }}
-                        aria-label={`${t("projects.details")} — ${
-                          t(project.titleKey) /* aria-label only */
-                        }`}
-                        className="group/det mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-ink-50 px-3 py-2 text-xs font-semibold text-ink-700 transition-[background-color,color] duration-300 hover:bg-brand-500/10 hover:text-brand-600 dark:bg-zinc-800/70 dark:text-zinc-300 dark:hover:bg-brand-500/10 dark:hover:text-brand-300"
-                      >
-                        <span
-                          className={`transition-transform duration-300 ${isRTL ? "rotate-180 group-hover/det:-translate-x-0.5" : "group-hover/det:translate-x-0.5"}`}
-                        >
-                          <ArrowNext className="h-3.5 w-3.5" />
-                        </span>
-                        {t("projects.details")}
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </article>
-            </Reveal>
-          ))}
-        </div>
+        {pages > 1 ? (
+          <Pagination page={page} pages={pages} total={PROJECTS.length} onChange={goTo} />
+        ) : null}
       </div>
 
-      <Dialog
-        isOpen={Boolean(selectedProject)}
-        onClose={() => setSelectedProject(null)}
-        aria-labelledby="project-dialog-title"
-      >
-        {selectedProject && (
-          <div className="dark:bg-zinc-900">
-            {/* Hero image */}
-            <div className="relative aspect-[16/9] overflow-hidden bg-zinc-200 sm:aspect-[21/9] dark:bg-zinc-800">
+      <Dialog isOpen={Boolean(selected)} onClose={() => setSelected(null)}>
+        {selected && (
+          <div>
+            <div className="relative aspect-[16/9] overflow-hidden bg-ink-100 dark:bg-zinc-800">
               <img
-                src={selectedProject.image}
-                alt={t(selectedProject.titleKey)}
-                loading="lazy"
+                src={selected.image}
+                alt={t(selected.titleKey)}
                 decoding="async"
                 className="h-full w-full object-cover"
               />
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-gradient-to-t from-zinc-950/70 via-transparent to-zinc-950/20"
-              />
               <button
                 type="button"
-                onClick={() => setSelectedProject(null)}
+                onClick={() => setSelected(null)}
                 aria-label={t("projects.dialog.closeAria")}
-                className="absolute end-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white/90 backdrop-blur-sm transition hover:bg-black/60 hover:text-white"
+                className="absolute end-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-ink-900 shadow-sm transition hover:bg-white dark:bg-zinc-900/95 dark:text-zinc-100"
               >
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.8}
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <XMarkIcon className="h-5 w-5" />
               </button>
             </div>
 
             <div className="p-6 sm:p-8">
               <h2
                 id="project-dialog-title"
-                className="font-display text-2xl font-bold text-ink-950 dark:text-white sm:text-3xl"
+                className="font-display text-2xl font-bold text-ink-950 sm:text-3xl dark:text-white"
               >
-                {t(selectedProject.titleKey)}
+                {t(selected.titleKey)}
               </h2>
 
-              <div className="mt-5 flex flex-wrap gap-2">
-                {selectedProject.tech.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-brand-500/30 bg-brand-500/10 px-3 py-1 text-xs font-semibold text-brand-700 dark:text-brand-300"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <p className="mt-6 text-base leading-relaxed text-ink-700 dark:text-zinc-300">
-                {t(selectedProject.longDescriptionKey)}
+              <p className="mt-4 text-base leading-relaxed text-ink-700 dark:text-zinc-300">
+                {t(selected.longDescriptionKey)}
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-3 border-t border-dashed border-ink-200 pt-6 dark:border-zinc-800">
-                {selectedProject.demoUrl && (
+              <ul className="mt-6 flex flex-wrap gap-2">
+                {selected.tech.map((tag) => (
+                  <li
+                    key={tag}
+                    className="rounded-lg border border-ink-200 bg-ink-50 px-2.5 py-1 text-xs font-medium text-ink-700 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
+                  >
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+
+              {selected.authNote ? (
+                <div className="mt-6 flex gap-3 rounded-xl border border-ink-200 bg-ink-50 p-4 text-sm text-ink-700 dark:border-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-300">
+                  <KeyIcon aria-hidden className="mt-0.5 h-4 w-4 flex-none text-ink-500" />
+                  <div className="min-w-0">
+                    <p className="font-semibold text-ink-900 dark:text-zinc-100">
+                      {t("projects.guestAccess")}
+                    </p>
+                    <p className="mt-0.5 break-words">
+                      {t(selected.authNote).replace(/^💡\s*/u, "")}
+                    </p>
+                  </div>
+                </div>
+              ) : null}
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                {selected.demoUrl && (
                   <a
-                    href={selectedProject.demoUrl}
+                    href={selected.demoUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex min-w-[140px] flex-1 items-center justify-center rounded-full bg-brand-600 px-4 py-2.5 text-center text-sm font-semibold text-white shadow-sm shadow-brand-600/20 transition hover:-translate-y-0.5 hover:bg-brand-500 sm:flex-none"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-500"
                   >
-                    {t("projects.demo")}
+                    {t("projects.visit")}
+                    <ArrowUpRightIcon aria-hidden className="h-4 w-4 rtl:-scale-x-100" />
                   </a>
                 )}
-                {selectedProject.repoUrl && (
-                  <a
-                    href={selectedProject.repoUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex min-w-[140px] flex-1 items-center justify-center rounded-full border border-ink-200 px-4 py-2.5 text-center text-sm font-semibold text-ink-900 transition hover:-translate-y-0.5 hover:border-brand-500/50 hover:text-brand-700 dark:border-zinc-600 dark:text-zinc-100 dark:hover:border-brand-400/50 dark:hover:text-brand-300 sm:flex-none"
-                  >
+                {selected.dashboardUrl && (
+                  <a href={selected.dashboardUrl} target="_blank" rel="noreferrer" className={linkBtn}>
+                    {t("common.dashboard")}
+                    <ArrowUpRightIcon aria-hidden className="h-4 w-4 rtl:-scale-x-100" />
+                  </a>
+                )}
+                {selected.repoUrl && (
+                  <a href={selected.repoUrl} target="_blank" rel="noreferrer" className={linkBtn}>
                     {t("projects.code")}
                   </a>
                 )}
               </div>
-
-              {selectedProject.repoUrl &&
-                selectedProject.repoUrl.includes("private") && (
-                  <p className="mt-3 text-xs text-ink-500 dark:text-zinc-500">
-                    {t("projects.privateRepoNote")}
-                  </p>
-                )}
             </div>
           </div>
         )}
