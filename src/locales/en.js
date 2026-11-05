@@ -243,14 +243,14 @@ const en = {
           year: "2021",
         },
         {
+          name: "Elzero Web School",
+          label: "Advanced Front-End Track",
+          year: "2021",
+        },
+        {
           name: "Udemy (Jonas Schmedtmann)",
           label: "The Ultimate React Course",
           year: "2024",
-        },
-        {
-          name: "Elzero Web School",
-          label: "Advanced Front-End Track",
-          year: "",
         },
       ],
     },

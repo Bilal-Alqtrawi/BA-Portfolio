@@ -54,6 +54,10 @@ export const PROJECTS: Project[] = [
       "Open Graph / Media Assets",
     ],
     image: publicImage("qira.webp"),
+    imageByLocale: {
+      en: publicImage("qira-en.webp"),
+      ar: publicImage("qira-ar.webp"),
+    },
     demoUrl: "https://www.qira.ltd",
   },
   {
@@ -71,6 +75,10 @@ export const PROJECTS: Project[] = [
     ],
 
     image: publicImage("nexvio.webp"),
+    imageByLocale: {
+      en: publicImage("nexvio-en.webp"),
+      ar: publicImage("nexvio-ar.webp"),
+    },
     demoUrl: "https://nexvio.ae/home",
   },
   {
@@ -93,6 +101,10 @@ export const PROJECTS: Project[] = [
       "Vite",
     ],
     image: publicImage("moaawen.webp"),
+    imageByLocale: {
+      en: publicImage("moaawen-en.webp"),
+      ar: publicImage("moaawen-ar.webp"),
+    },
     demoUrl: "https://moawen.sa",
     dashboardUrl: "http://app.moawen.sa",
     authNote: "projects.moawen.notes",
@@ -132,6 +144,10 @@ export const PROJECTS: Project[] = [
       "React Hook Form",
     ],
     image: publicImage("masa-1.webp"),
+    imageByLocale: {
+      en: publicImage("masa-en.webp"),
+      ar: publicImage("masa-ar.webp"),
+    },
     demoUrl: "https://www.masatoys.com/home",
     // repoUrl: "https://github.com/Masa-Store/app-frontend",
   },
@@ -142,6 +158,10 @@ export const PROJECTS: Project[] = [
     longDescriptionKey: "projects.alghaith.longDescription",
     tech: ["Next.js", "Tailwind CSS", "Shadcn/UI", "SSR/SSG", "Server Actions"],
     image: publicImage("alghaith.webp"),
+    imageByLocale: {
+      en: publicImage("alghaith-en.webp"),
+      ar: publicImage("alghaith-ar.webp"),
+    },
     demoUrl: "https://gkl.sa",
     // repoUrl: "https://your-masa-toys-url.com",
   },
@@ -159,6 +179,10 @@ export const PROJECTS: Project[] = [
       "Excel Export",
     ],
     image: publicImage("wsl.webp"),
+    imageByLocale: {
+      en: publicImage("wsl-en.webp"),
+      ar: publicImage("wsl-ar.webp"),
+    },
     demoUrl: "https://wsl-driver-form-page.vercel.app/",
     dashboardUrl: "https://wsl-dashboard.netlify.app/dashboard",
     authNote: "projects.wsl.notes",
