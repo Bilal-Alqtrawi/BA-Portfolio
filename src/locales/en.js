@@ -45,6 +45,7 @@ const en = {
       "NexVio",
       "Masa Toys",
       "Al-Ghaith & Al-Kharif",
+      "Al-Alia Law Firm",
       "WSL",
     ],
     backToTop: "Back to top",
@@ -289,6 +290,13 @@ const en = {
         "An enterprise-grade Telehealth and EHR platform connecting administration portals, doctors, and patients.",
       longDescription:
         "An enterprise-grade Telehealth and Electronic Health Records (EHR) platform developed within 'Fikratak' team, connecting administration portals, doctor dashboards, and mobile patient apps. Built with Next.js, MUI, and Redux Toolkit under a strict role-based access control (RBAC) system. Features real-time video/voice consultations powered by Stream SDK, live chat via Socket.io, emergency request tracking using interactive maps (Google Maps/Mapbox), and comprehensive modules for pharmacy management and digital wallets. Integrated with Anthropic AI for intelligent clinical assistance, and securely backed by NextAuth, JWT sessions, and Prisma ORM.",
+    },
+    alalia: {
+      title: "Al-Alia Law Firm & Legal Consultancy",
+      shortDescription:
+        "A bilingual-ready corporate landing page for a Riyadh law firm, built with Next.js and optimized for SEO.",
+      longDescription:
+        "A polished corporate landing page for Al-Alia Law Firm & Legal Consultancy in Riyadh. Built with Next.js, Tailwind CSS and Shadcn/UI with a full-screen hero, practice-area sections (administrative, criminal, labor, intellectual property, governance and banking), an interactive office map, consultation booking links and a floating WhatsApp button. Fully RTL, with rich SEO (metadata, JSON-LD, sitemap, Open Graph) and smooth motion animations.",
     },
     alghaith: {
       title: "Al-Ghaith & Al-Kharif",

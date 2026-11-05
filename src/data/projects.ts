@@ -5,6 +5,8 @@ export type Project = {
   longDescriptionKey: string;
   tech: string[];
   image: string;
+  /** Optional per-language preview (falls back to `image`) */
+  imageByLocale?: { en?: string; ar?: string };
   /** Live site — add your URL when ready */
   demoUrl?: string;
   /** Public repo — omit for client / private work */
@@ -17,6 +19,27 @@ const publicImage = (file: string) =>
   `${process.env.PUBLIC_URL || ""}/${file}`.replace(/\/+/g, "/");
 
 export const PROJECTS: Project[] = [
+  {
+    id: "alalia",
+    titleKey: "projects.alalia.title",
+    shortDescriptionKey: "projects.alalia.shortDescription",
+    longDescriptionKey: "projects.alalia.longDescription",
+    tech: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Shadcn/UI",
+      "Motion",
+      "SEO / JSON-LD",
+    ],
+    image: publicImage("alalia-ar.webp"),
+    imageByLocale: {
+      en: publicImage("alalia-en.webp"),
+      ar: publicImage("alalia-ar.webp"),
+    },
+    demoUrl: "https://al-alia-company-landing-page.vercel.app",
+  },
   {
     id: "qira",
     titleKey: "projects.qira.title",

@@ -15,6 +15,8 @@ import Reveal from "./ui/Reveal";
 import SectionHeading from "./ui/SectionHeading";
 
 const PER_PAGE = 4;
+
+const imageFor = (project, locale) => project.imageByLocale?.[locale] || project.image;
 const TAGS_ON_CARD = 3;
 
 function LiveBadge({ label }) {
@@ -27,7 +29,7 @@ function LiveBadge({ label }) {
 }
 
 function ProjectCard({ project, wide, onOpen }) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const title = t(project.titleKey);
   const extra = project.tech.length - TAGS_ON_CARD;
 
@@ -43,7 +45,7 @@ function ProjectCard({ project, wide, onOpen }) {
         }`}
       >
         <img
-          src={project.image}
+          src={imageFor(project, locale)}
           alt=""
           loading="lazy"
           decoding="async"
@@ -172,7 +174,7 @@ const linkBtn =
   "inline-flex items-center gap-1.5 rounded-lg border border-ink-200 px-5 py-2.5 text-sm font-semibold text-ink-900 transition-colors hover:border-ink-950 dark:border-zinc-700 dark:text-zinc-100 dark:hover:border-zinc-300";
 
 export default function Projects() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [selected, setSelected] = useState(null);
   const [page, setPage] = useState(1);
   const sectionRef = useRef(null);
@@ -243,7 +245,7 @@ export default function Projects() {
           <div>
             <div className="relative aspect-[16/9] overflow-hidden bg-ink-100 dark:bg-zinc-800">
               <img
-                src={selected.image}
+                src={imageFor(selected, locale)}
                 alt={t(selected.titleKey)}
                 decoding="async"
                 className="h-full w-full object-cover"
