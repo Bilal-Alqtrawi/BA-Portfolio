@@ -38,7 +38,7 @@ export const PROJECTS: Project[] = [
       en: publicImage("alalia-en.webp"),
       ar: publicImage("alalia-ar.webp"),
     },
-    demoUrl: "https://al-alia-company-landing-page.vercel.app",
+    demoUrl: "https://alulialaw.com/",
   },
   {
     id: "qira",
