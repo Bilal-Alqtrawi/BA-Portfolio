@@ -19,10 +19,13 @@ const PER_PAGE = 4;
 const imageFor = (project, locale) => project.imageByLocale?.[locale] || project.image;
 const TAGS_ON_CARD = 3;
 
-function LiveBadge({ label }) {
+function LiveBadge({ label, inDevelopment = false }) {
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-1 text-xs font-semibold text-ink-900 shadow-sm dark:bg-zinc-900/95 dark:text-zinc-100">
-      <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+      <span
+        aria-hidden
+        className={`h-1.5 w-1.5 rounded-full ${inDevelopment ? "bg-amber-500" : "bg-emerald-500"}`}
+      />
       {label}
     </span>
   );
@@ -52,9 +55,12 @@ function ProjectCard({ project, wide, onOpen }) {
           draggable={false}
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
         />
-        {project.demoUrl ? (
+        {project.demoUrl || project.inDevelopment ? (
           <span className="absolute start-3 top-3">
-            <LiveBadge label={t("projects.live")} />
+            <LiveBadge
+              inDevelopment={project.inDevelopment}
+              label={t(project.inDevelopment ? "projects.inDevelopment" : "projects.live")}
+            />
           </span>
         ) : null}
       </div>

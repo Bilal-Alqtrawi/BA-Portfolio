@@ -13,12 +13,38 @@ export type Project = {
   repoUrl?: string;
   dashboardUrl?: string;
   authNote?: string;
+  /** Still being built — shows an "In development" badge instead of "Live" */
+  inDevelopment?: boolean;
 };
 
 const publicImage = (file: string) =>
   `${process.env.PUBLIC_URL || ""}/${file}`.replace(/\/+/g, "/");
 
 export const PROJECTS: Project[] = [
+  {
+    id: "shahrazad",
+    titleKey: "projects.shahrazad.title",
+    shortDescriptionKey: "projects.shahrazad.shortDescription",
+    longDescriptionKey: "projects.shahrazad.longDescription",
+    tech: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Tailwind CSS 4",
+      "Shadcn/UI",
+      "TanStack Query",
+      "Zustand",
+      "Zod",
+      "Motion",
+    ],
+    image: publicImage("shahrazad-en.webp"),
+    imageByLocale: {
+      en: publicImage("shahrazad-en.webp"),
+      ar: publicImage("shahrazad-ar.webp"),
+    },
+    demoUrl: "https://shahrazad-platform-eight.vercel.app/en",
+    inDevelopment: true,
+  },
   {
     id: "alalia",
     titleKey: "projects.alalia.title",
@@ -125,7 +151,7 @@ export const PROJECTS: Project[] = [
       "NextAuth",
     ],
     image: publicImage("arsl-project.webp"),
-    dashboardUrl: "https://admin.arsl-app.com",
+    demoUrl: "https://admin.arsl-app.com",
     // authNote removed - no specific auth notes for this project
     // repoUrl: "https://your-masa-toys-url.com",
   },

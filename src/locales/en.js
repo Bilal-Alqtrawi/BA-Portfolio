@@ -260,6 +260,13 @@ const en = {
     kicker: "Selected work",
     subtitle:
       "A few products I built or helped build. Most are live — click a card for the full story.",
+    shahrazad: {
+      title: "Shahrazad Tours",
+      shortDescription:
+        "A multilingual travel booking site for flights, hotels, holiday packages, airport transfers and eSIMs.",
+      longDescription:
+        "The customer-facing front-end of Shahrazad Tours, a travel booking platform built with Next.js 16, React 19 and TypeScript. Users search and book flights on a live API (with offer and price validity timers and live re-validation), book airport transfers through the i'way provider API, buy travel eSIM plans, browse hotels and holiday packages with filters and booking flows, and save favorites across all of them. Fully translated into English, Arabic and Hebrew with complete RTL support, responsive and built pixel-close to the Figma design. Under the hood: a layered architecture (page → view → components → React Query hooks → repositories) with swappable real-API and mock data sources, runtime validation of every API response with Zod, server-side prefetching with client hydration, and search state kept in the URL. Performance target: a Lighthouse mobile score of 90+. Currently in development.",
+    },
     moawen: {
       title: "Moawen Platform",
       shortDescription:
@@ -326,6 +333,7 @@ const en = {
       closeAria: "Close",
     },
     live: "Live",
+    inDevelopment: "In development",
     visit: "Visit site",
     more: "Details",
     guestAccess: "Guest access",
